@@ -7,6 +7,9 @@ jalaliDatepicker.startWatch({
 
 jQuery(document).ready(function ($) {
 
+    $('.inputColor').wpColorPicker();
+
+
     $('.onlyNumbersInput').on('input paste', function () {
         this.value = this.value.replace(/[^0-9]/g, '');
     });

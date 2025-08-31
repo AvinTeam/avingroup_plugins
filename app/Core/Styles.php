@@ -15,6 +15,8 @@ class Styles
 
     public function admin_script()
     {
+        wp_enqueue_style('wp-color-picker');
+
         wp_enqueue_media();
 
         $this->jalalidatepicker();
@@ -29,7 +31,7 @@ class Styles
         wp_enqueue_script(
             'ag_admin',
             AG_JS . 'admin.js',
-            [ 'jquery', 'jalalidatepicker' ],
+            [ 'jquery', 'jalalidatepicker', 'wp-color-picker' ],
             AG_VERSION,
             true
         );

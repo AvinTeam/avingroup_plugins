@@ -10,16 +10,12 @@ class PartnersMetaBoxes extends MetaBoxes
 
     public function __construct()
     {
-
         add_action('add_meta_boxes', [ $this, 'meta_boxes' ]);
-
         add_action('save_post', [ $this, 'save' ], 1, 3);
-
     }
 
     public function meta_boxes(): void
     {
-
         add_meta_box(
             'partners_info',
             'اطلاعات همکار',
@@ -27,31 +23,34 @@ class PartnersMetaBoxes extends MetaBoxes
             'partners',
             'normal',
             'high'
-
         );
 
     }
 
     public function partners_info($post)
     {
-        $site  = get_post_meta(get_the_ID(), '_site', true);
-        $phone = get_post_meta(get_the_ID(), '_phone', true);
-        $email = get_post_meta(get_the_ID(), '_email', true);
+        $color  = get_post_meta(get_the_ID(), '_color', true);
+        $slogan = get_post_meta(get_the_ID(), '_slogan', true);
+        $site   = get_post_meta(get_the_ID(), '_site', true);
+        $phone  = get_post_meta(get_the_ID(), '_phone', true);
+        $email  = get_post_meta(get_the_ID(), '_email', true);
 
         view('metaBoxes/partners/info',
             [
-                'site'  => esc_url($site),
-                'phone' => $phone,
-                'email' => $email,
+                'color'  => $color,
+                'slogan' => $slogan,
+                'site'   => esc_url($site),
+                'phone'  => $phone,
+                'email'  => $email,
              ]);
 
     }
 
     public function save($post_id, $post, $updata)
     {
-        if (isset($_POST[ 'products_info' ])) {
+        if (isset($_POST[ 'partners' ])) {
 
-            foreach ($_POST[ 'products_info' ] as $key => $value) {
+            foreach ($_POST[ 'partners' ] as $key => $value) {
 
                 update_post_meta($post_id, '_' . $key, $value);
             }
