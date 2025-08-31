@@ -15,101 +15,109 @@ jQuery(document).ready(function ($) {
     });
 
 
-    $(document).on('click', '.upload-logo', function (e) {
-        e.preventDefault();
-        var button = $(this);
-        var logoIdInput = button.siblings('.partner-logo-id');
-        var preview = button.siblings('.logo-preview');
 
-        var frame = wp.media({
-            title: 'انتخاب لوگو',
+
+
+
+
+    // انتخاب تصویر از گالری
+    $(document).on('click', '.upload-menu-image', function (e) {
+        e.preventDefault();
+
+        var mediaUploader = wp.media({
+            title: 'انتخاب تصویر برای کاور ویدئو',
+            button: { text: 'استفاده از این تصویر' },
             multiple: false,
-            library: { type: 'image' },
-            button: { text: 'استفاده به عنوان لوگو' }
+            library: {
+                type: ['image']
+            },
         });
 
-        // اگر لوگوی قبلی وجود دارد، آن را انتخاب شده نشان دهید
-        if (logoIdInput.val()) {
-            frame.on('open', function () {
-                var selection = frame.state().get('selection');
-                var attachment = wp.media.attachment(logoIdInput.val());
-                attachment.fetch();
-                selection.add(attachment);
-            });
+        mediaUploader.on('select', function () {
+            var attachment = mediaUploader.state().get('selection').first().toJSON();
+
+            $('#zba-add-image-id').val(attachment.id);
+            $('#zba-video-image').attr('src', attachment.url).show();
+        });
+
+        mediaUploader.open();
+    });
+
+    // حذف تصویر
+    $(document).on('click', '.remove-menu-image', function (e) {
+        e.preventDefault();
+        $('#zba-add-image-id').val('');
+        $('#zba-video-image').hide().attr('src', '');
+    });
+
+    $("form#edittag").attr("enctype", "multipart/form-data");
+
+
+    $('#gallery-images-list').sortable({
+        update: function () {
+            updateGalleryInput();
         }
+    });
+
+    $('#upload-gallery-images').click(function (e) {
+        e.preventDefault();
+        var frame = wp.media({
+            title: 'انتخاب عکس‌های گالری',
+            multiple: true,
+            library: { type: 'image' },
+            button: { text: 'استفاده از عکس‌ها' }
+        });
 
         frame.on('select', function () {
-            var attachment = frame.state().get('selection').first().toJSON();
-            logoIdInput.val(attachment.id);
-            preview.html('<img src="' + attachment.url + '" />');
-            button.text('تغییر لوگو');
-        }).open();
-    });
+            var attachments = frame.state().get('selection').toJSON();
+            attachments.forEach(function (attachment) {
 
-    // افزودن همکار جدید
-    $('#add-partner').click(function () {
-        var newItem = `
-            <div class="partner-item" draggable="true">
-                <div class="partner-handle dashicons dashicons-move"></div>
-                <div class="partner-fields">
-                    <div>
-                        <label>عنوان همکار</label>
-                        <input type="text" name="partner_name[]" required>
-                    </div>
-                    <div>
-                        <label>لینک (اختیاری)</label>
-                        <input type="url" name="partner_url[]">
-                    </div>
-                    <div class="logo-uploader">
-                        <label>لوگو</label>
-                        <input type="hidden" class="partner-logo-id" name="partner_logo_id[]" required>
-                        <button type="button" class="upload-logo button">انتخاب لوگو</button>
-                        <div class="logo-preview"></div>
-                    </div>
-                    <button type="button" class="remove-partner button-link dashicons dashicons-trash"></button>
-                </div>
-            </div>
-            `;
-        $('#partners-list').append(newItem);
-    });
-
-    // حذف همکار
-    $(document).on('click', '.remove-partner', function () {
-        $(this).closest('.partner-item').fadeOut(300, function () {
-            $(this).remove();
-        });
-    });
-
-    // مرتب‌سازی با درگ‌اند‌دراپ
-    $('#partners-list').sortable({
-        handle: '.partner-handle',
-        axis: 'y',
-        opacity: 0.7,
-        placeholder: 'partner-placeholder',
-        cursor: 'move'
-    });
-
-    // اعتبارسنجی فرم قبل از ارسال
-    $('#partners-form').on('submit', function (e) {
-        var isValid = true;
-
-        $('.partner-item').each(function () {
-            var name = $(this).find('input[name="partner_name[]"]').val();
-            var logoId = $(this).find('.partner-logo-id').val();
-
-            if (!name || !logoId) {
-                isValid = false;
-                $(this).css('border-color', '#ff0000');
-            } else {
-                $(this).css('border-color', '#ddd');
-            }
+                $('#gallery-images-list').append(`
+                        <li class="image-item" data-id="${attachment.id}">
+                            <img src="${attachment.url}" />
+                            <a href="#" class="remove-image">حذف</a>
+                        </li>
+                    `);
+            });
+            updateGalleryInput();
         });
 
-        if (!isValid) {
-            e.preventDefault();
-            alert('لطفاً برای تمام همکاران عنوان و لوگو را مشخص کنید.');
-        }
+        frame.open();
     });
+
+    // حذف عکس
+    $(document).on('click', '.remove-image', function (e) {
+        e.preventDefault();
+        $(this).parent().remove();
+        updateGalleryInput();
+    });
+
+    // ذخیره تغییرات با AJAX
+    // $('#save-gallery').click(function (e) {
+    //     e.preventDefault();
+    //     console.log(zba_js.ajaxurl);
+    //     $.post(zba_js.ajaxurl, {
+    //         action: 'save_zba_galleries',
+    //         image_ids: $('#zba_galleries').val(),
+    //         gallery_type: $('#gallery_type').val(),
+    //         security: zba_js.nonce
+    //     }, function (response) {
+    //         alert('تغییرات ذخیره شد!');
+    //     });
+    // });
+
+    // به‌روزرسانی فیلد مخفی
+    function updateGalleryInput() {
+        var imageIds = [];
+        $('#gallery-images-list .image-item').each(function () {
+            imageIds.push($(this).data('id'));
+        });
+
+        console.log(imageIds);
+        $('#gallery_items').val(imageIds.join(','));
+    }
+
+
 
 
 })

@@ -5,7 +5,7 @@ use AvinGroup\App\Core\MetaBoxes;
 
 (defined('ABSPATH')) || exit;
 
-class PartnersMetaBoxes extends MetaBoxes
+class ProjectMetaBoxes extends MetaBoxes
 {
 
     public function __construct()
@@ -21,10 +21,10 @@ class PartnersMetaBoxes extends MetaBoxes
     {
 
         add_meta_box(
-            'partners_info',
-            'اطلاعات همکار',
-            [ $this, 'partners_info' ],
-            'partners',
+            'gallery',
+            'گالری',
+            [ $this, 'gallery' ],
+            'projects',
             'normal',
             'high'
 
@@ -32,27 +32,27 @@ class PartnersMetaBoxes extends MetaBoxes
 
     }
 
-    public function partners_info($post)
+    public function gallery($post)
     {
-        $site  = get_post_meta(get_the_ID(), '_site', true);
-        $phone = get_post_meta(get_the_ID(), '_phone', true);
-        $email = get_post_meta(get_the_ID(), '_email', true);
 
-        view('metaBoxes/partners/info',
+        $gallery = get_post_meta(get_the_ID(), '_gallery', true);
+
+        $galleryDescription = get_post_meta(get_the_ID(), '_galleryDescription', true);
+
+        view('metaBoxes/project/gallery',
             [
-                'site'  => esc_url($site),
-                'phone' => $phone,
-                'email' => $email,
+                'gallery'            => $gallery,
+                'image_ids'          => (empty($gallery)) ? [  ] : explode(',', $gallery),
+                'galleryDescription' => $galleryDescription,
              ]);
 
     }
 
     public function save($post_id, $post, $updata)
     {
-        if (isset($_POST[ 'products_info' ])) {
+        if (isset($_POST[ 'project' ])) {
 
-            foreach ($_POST[ 'products_info' ] as $key => $value) {
-
+            foreach ($_POST[ 'project' ] as $key => $value) {
                 update_post_meta($post_id, '_' . $key, $value);
             }
 
