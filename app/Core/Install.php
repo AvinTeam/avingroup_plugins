@@ -13,7 +13,7 @@ class Install
         $this->db_name_key = config('app.key');
         global $wpdb;
         $this->wpdb = $wpdb;
-        add_action('after_switch_theme', [ $this, 'install' ]);
+        // add_action('after_switch_theme', [ $this, 'install' ]);
 
     }
 

@@ -4,7 +4,6 @@
 
 function view($view, $response = null)
 {
-
     if (! file_exists(AG_VIEWS . $view . '.php')) {
 
         echo "<p style='text-align:center'>dont have view -> $view</p>";

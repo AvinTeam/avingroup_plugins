@@ -75,8 +75,8 @@ new MetaBoxes;
 new RestAPI;
 
 if (is_admin()) {
-    new Install;
-    new SettingMenu;
+    // new Install;
+    // new SettingMenu;
 
 
 }
