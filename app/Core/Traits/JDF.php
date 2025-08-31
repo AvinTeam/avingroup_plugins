@@ -56,7 +56,7 @@ trait JDF
             $new_date = ($time === 0) ? $ch_date : $ch_date . ' ' . $time;
         }
 
-        return $new_date;
+        return $new_date ?? 0;
 
     }
 
@@ -642,12 +642,13 @@ trait JDF
 
     public function gregorian_to_jalali($g_y, $g_m, $g_d, $mod = '')
     {
-        $g_y   = $this->tr_num($g_y);
-        $g_m   = $this->tr_num($g_m);
-        $g_d   = $this->tr_num($g_d); /* <= :اين سطر ، جزء تابع اصلي نيست */
-        $d_4   = $g_y % 4;
-        $g_a   = [ 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ];
-        $doy_g = $g_a[ (int) $g_m ] + $g_d;
+        $g_y = $this->tr_num($g_y);
+        $g_m = $this->tr_num($g_m);
+        $g_d = $this->tr_num($g_d); 
+        $d_4 = $g_y % 4;
+        $g_a = [ 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ];
+
+        $doy_g = $g_a[ (int) $g_m ] + (int)$g_d;
         if ($d_4 == 0 and $g_m > 2) {
             $doy_g++;
         }

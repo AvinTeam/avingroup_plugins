@@ -11,7 +11,6 @@ class Init
     public function __construct()
     {
        new ProductsPostTypes;
-       new Taxonomies;
     }
 
     

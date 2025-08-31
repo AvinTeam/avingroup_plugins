@@ -1,8 +1,8 @@
 <?php
 namespace AvinGroup\App\Modules\PostTypes;
 
-use Sazo\App\Core\PostType;
-use Sazo\App\Models\Products;
+use AvinGroup\App\Core\PostType;
+use AvinGroup\App\Models\Products;
 
 (defined('ABSPATH')) || exit;
 
@@ -14,7 +14,6 @@ class ProductsPostTypes extends PostType
 
         add_filter('manage_content_products_columns', [ $this, 'add_vote_count_column' ]);
         add_filter('manage_products_posts_columns', [ $this, 'add_site_column_title' ]);
-        add_action('manage_products_posts_custom_column', [ $this, 'show_site_count_column' ], 10, 2);
 
     }
 
@@ -71,16 +70,6 @@ class ProductsPostTypes extends PostType
     {
         $columns[ 'sites' ] = 'تعداد سایت';
         return $columns;
-    }
-
-    public function show_site_count_column($column, $post_id)
-    {
-        if ($column === 'sites') {
-
-            $count = number_format(Products::find($post_id)->sites()->count());
-
-            echo '<a href="'. admin_url('admin.php?page=sites-menu&product_id=' . $post_id) .'">' . $count . '</a>';
-        }
     }
 
 }

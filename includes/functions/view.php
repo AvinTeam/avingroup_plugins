@@ -5,7 +5,7 @@
 function view($view, $response = null)
 {
 
-    if (! file_exists(SAZO_VIEWS . $view . '.php')) {
+    if (! file_exists(AG_VIEWS . $view . '.php')) {
 
         echo "<p style='text-align:center'>dont have view -> $view</p>";
     } else {
@@ -16,7 +16,7 @@ function view($view, $response = null)
 
         }
 
-        require SAZO_VIEWS . $view . '.php';
+        require AG_VIEWS . $view . '.php';
     }
 
 }

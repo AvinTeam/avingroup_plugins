@@ -16,7 +16,7 @@ class Option
             'social'     => [  ],
          ];
 
-        $setting = get_option('sazoSetting', [  ]);
+        $setting = get_option('agSetting', [  ]);
 
         return array_merge($defaultSetting, $setting);
     }
@@ -31,13 +31,13 @@ class Option
             'social'     => [  ],
          ];
 
-        $setting = get_option('sazoSetting', [  ]);
+        $setting = get_option('agSetting', [  ]);
 
         $setting = array_merge($defaultSetting, $setting);
 
         $setting = array_merge($setting, $input);
 
-        update_option('sazoSetting', $setting);
+        update_option('agSetting', $setting);
 
         return $setting;
     }

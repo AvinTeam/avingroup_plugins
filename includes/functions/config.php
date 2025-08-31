@@ -23,7 +23,7 @@ if (!function_exists('config')) {
         
         // Load config file if not already loaded
         if (!isset($configs[$file])) {
-            $config_path = SAZO_CONFIG . $file . '.php';
+            $config_path = AG_CONFIG . $file . '.php';
             
             if (file_exists($config_path)) {
                 $configs[$file] = require $config_path;

@@ -14,7 +14,7 @@ class RestAPI
 
     public function __construct()
     {
-        $this->namespace = 'sazo/v1';
+        $this->namespace = 'ag/v1';
 
         add_action('rest_api_init', [ $this, 'register_routes' ]);
         add_filter('rest_authentication_errors', [ $this, 'disable_default_endpoints' ]);

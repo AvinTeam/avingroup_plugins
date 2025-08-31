@@ -3,7 +3,7 @@
 (defined('ABSPATH')) || exit;
 
 
-function sazo_remote(string $url)
+function ag_remote(string $url)
 {
     $res = wp_remote_get(
         $url,
@@ -26,7 +26,7 @@ function sazo_remote(string $url)
     return $result;
 }
 
-function sazo_mask_mobile($mobile)
+function ag_mask_mobile($mobile)
 {
 
     $mobile = (string) $mobile;
@@ -52,7 +52,7 @@ function get_current_relative_url()
     return $relative_url;
 }
 
-function sazo_to_english($text)
+function ag_to_english($text)
 {
 
     $western = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ];
@@ -70,13 +70,13 @@ function is_mobile($mobile)
     return preg_match($pattern, $mobile);
 }
 
-function sazo_transient()
+function ag_transient()
 {
-    $sazo_transient = get_transient('sazo_transient');
+    $ag_transient = get_transient('ag_transient');
 
-    if ($sazo_transient) {
-        delete_transient('sazo_transient');
-        return $sazo_transient;
+    if ($ag_transient) {
+        delete_transient('ag_transient');
+        return $ag_transient;
     }
 
 }

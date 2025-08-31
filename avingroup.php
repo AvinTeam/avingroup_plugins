@@ -22,7 +22,14 @@
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use AvinGroup\App\Core\Accesses;
 use AvinGroup\App\Core\FunctionAutoloader;
+use AvinGroup\App\Core\Init;
+use AvinGroup\App\Core\Install;
+use AvinGroup\App\Core\MetaBoxes;
+use AvinGroup\App\Core\RestAPI;
+use AvinGroup\App\Core\Styles;
+use AvinGroup\App\Modules\Menus\SettingMenu;
 use Dotenv\Dotenv;
 
 defined('ABSPATH') || exit;
@@ -61,5 +68,25 @@ if (class_exists(Dotenv::class)) {
 
 new FunctionAutoloader;
 
+new Accesses;
+new Init;
+new Styles;
+new MetaBoxes;
+new RestAPI;
+
+if (is_admin()) {
+    new Install;
+    new SettingMenu;
+
+
+}
+if (isset($_GET[ 'test' ])) {
+
+    dd(
+
+    );
+
+    exit;
+}
 
 // dd();
