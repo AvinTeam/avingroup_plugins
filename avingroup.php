@@ -22,6 +22,9 @@
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use AvinGroup\App\Core\FunctionAutoloader;
+use Dotenv\Dotenv;
+
 defined('ABSPATH') || exit;
 date_default_timezone_set('Asia/Tehran');
 
@@ -36,3 +39,18 @@ define('AG_PATH', plugin_dir_path(__FILE__));
 define('AG_INCLUDES', AG_PATH . 'includes/');
 define('AG_CONFIG', AG_PATH . 'config/');
 define('AG_VIEWS', AG_PATH . 'views/');
+
+if (file_exists(AG_PATH . '/vendor/autoload.php')) {
+    require_once AG_PATH . '/vendor/autoload.php';
+}
+
+if (class_exists(Dotenv::class)) {
+    $dotenv = Dotenv::createImmutable(AG_PATH);
+    $dotenv->load();
+}
+
+
+new FunctionAutoloader;
+
+
+// dd();
