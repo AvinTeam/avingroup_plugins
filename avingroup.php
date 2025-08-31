@@ -40,6 +40,15 @@ define('AG_INCLUDES', AG_PATH . 'includes/');
 define('AG_CONFIG', AG_PATH . 'config/');
 define('AG_VIEWS', AG_PATH . 'views/');
 
+define('AG_URL', plugin_dir_url(__FILE__));
+define('AG_ASSETS', AG_URL . 'assets/');
+define('AG_CSS', AG_ASSETS . 'css/');
+define('AG_JS', AG_ASSETS . 'js/');
+define('AG_IMAGE', AG_ASSETS . 'images/');
+define('AG_VENDOR', AG_ASSETS . 'vendor/');
+
+
+
 if (file_exists(AG_PATH . '/vendor/autoload.php')) {
     require_once AG_PATH . '/vendor/autoload.php';
 }
