@@ -81,6 +81,8 @@ class ProjectMetaBoxes extends MetaBoxes
 
         $links = get_post_meta(get_the_ID(), '_links', true);
 
+        if (is_string($links)) {$links = [  ];}
+
         view('metaBoxes/project/links',
             [
                 'links' => $links,
@@ -124,7 +126,8 @@ class ProjectMetaBoxes extends MetaBoxes
     {
 
         $isCorrect = get_post_meta(get_the_ID(), '_partner', true);
-        $isCorrect = array_map('absint', $isCorrect);
+
+        $isCorrect = is_array($isCorrect) ? array_map('absint', $isCorrect) : [  ];
 
         $partners = [  ];
 
