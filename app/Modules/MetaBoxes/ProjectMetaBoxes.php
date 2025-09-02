@@ -50,7 +50,6 @@ class ProjectMetaBoxes extends MetaBoxes
             'side',
         );
 
-        
         add_meta_box(
             'services',
             'خدمات',
@@ -160,7 +159,8 @@ class ProjectMetaBoxes extends MetaBoxes
         $isCorrect = get_post_meta(get_the_ID(), '_partner', true);
         $isCorrect = array_map('absint', $isCorrect);
 
-        $partners = [  ];
+        $services     = [  ];
+        $servicesName = [  ];
 
         $args = [
             'post_type'      => 'partners',
@@ -169,22 +169,31 @@ class ProjectMetaBoxes extends MetaBoxes
             'order'          => 'ASC',
          ];
 
-        $posts = get_posts($args);
+        $partners = get_posts($args);
 
-        foreach ($posts as $post) {
+        foreach ($partners as $partner) {
 
-            $partners[  ] = [
-                'id'    => $post->ID,
-                'title' => $post->post_title,
-             ];
+            $services[ 'term-' . $partner->ID ]     = [  ];
+            $servicesName[ 'term-' . $partner->ID ] = $partner->post_title;
+
+            $servicesId = intval(get_post_meta($partner->ID, '_servicesId', true));
+
+            foreach (get_term_children($servicesId, 'services') as $term_id) {  
+                $term = get_term($term_id, 'services');
+
+                $services[ 'term-' . $partner->ID ][  ] = [
+                    'id'    => $term_id,
+                    'title' => $term->name,
+                 ];
+
+            }
         }
 
-        // view('metaBoxes/project/services',
-        //     [
-        //         'partners'  => $partners,
-        //         'isCorrect' => $isCorrect,
-        //      ]);
-        view('metaBoxes/project/services');
+        view('metaBoxes/project/services',
+            [
+                'services'     => $services,
+                'servicesName' => $servicesName,
+             ]);
 
     }
 

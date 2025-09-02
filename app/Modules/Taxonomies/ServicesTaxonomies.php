@@ -44,12 +44,12 @@ class ServicesTaxonomies extends Taxonomies
             'labels'            => $labels,
             'show_ui'           => true,
             'public'            => true,
-            'show_admin_column' => true,
+            'show_admin_column' => false,
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'services', 'with_front' => false ],
          ];
 
-        register_taxonomy('services', 'partners', $args);
+        register_taxonomy('services', [ 'projects', 'partners' ], $args);
     }
 
     public function add_service_fields()

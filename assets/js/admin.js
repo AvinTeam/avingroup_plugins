@@ -13,9 +13,9 @@ jQuery(document).ready(function ($) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
-    $('#upload_service_icon').on('click', function(e) {
+    $('#upload_service_icon').on('click', function (e) {
         e.preventDefault();
-        
+
         var frame = wp.media({
             title: 'انتخاب آیکون',
             button: {
@@ -23,30 +23,28 @@ jQuery(document).ready(function ($) {
             },
             multiple: false
         });
-        
-        frame.on('select', function() {
+
+        frame.on('select', function () {
             var attachment = frame.state().get('selection').first().toJSON();
             $('#service_icon').val(attachment.id);
             $('#service_icon_preview').html('<img src="' + attachment.url + '" style="max-width: 50px; height: 50px; object-fit: contain;" />');
             $('#service_icon_preview').show();
             $('#remove_service_icon').show();
         });
-        
+
         frame.open();
     });
-    
-    // حذف آیکون
-    $('#remove_service_icon').on('click', function(e) {
+
+    $('#remove_service_icon').on('click', function (e) {
         e.preventDefault();
         $('#service_icon').val('');
         $('#service_icon_preview').html('');
         $(this).hide();
     });
-    
-    // آپلود پستر
-    $('#upload_service_poster').on('click', function(e) {
+
+    $('#upload_service_poster').on('click', function (e) {
         e.preventDefault();
-        
+
         var frame = wp.media({
             title: 'انتخاب پستر',
             button: {
@@ -54,40 +52,24 @@ jQuery(document).ready(function ($) {
             },
             multiple: false
         });
-        
-        frame.on('select', function() {
+
+        frame.on('select', function () {
             var attachment = frame.state().get('selection').first().toJSON();
             $('#service_poster').val(attachment.id);
             $('#service_poster_preview').html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto;" />');
             $('#service_poster_preview').show();
             $('#remove_service_poster').show();
         });
-        
+
         frame.open();
     });
-    
-    // حذف پستر
-    $('#remove_service_poster').on('click', function(e) {
+
+    $('#remove_service_poster').on('click', function (e) {
         e.preventDefault();
         $('#service_poster').val('');
         $('#service_poster_preview').html('');
         $(this).hide();
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     let nextItem = 0;
@@ -119,9 +101,6 @@ jQuery(document).ready(function ($) {
     });
 
 
-
-
-    // انتخاب تصویر از گالری
     $(document).on('click', '.upload-menu-image', function (e) {
         e.preventDefault();
 
@@ -144,7 +123,6 @@ jQuery(document).ready(function ($) {
         mediaUploader.open();
     });
 
-    // حذف تصویر
     $(document).on('click', '.remove-menu-image', function (e) {
         e.preventDefault();
         $('#zba-add-image-id').val('');
@@ -186,14 +164,12 @@ jQuery(document).ready(function ($) {
         frame.open();
     });
 
-    // حذف عکس
     $(document).on('click', '.remove-image', function (e) {
         e.preventDefault();
         $(this).parent().remove();
         updateGalleryInput();
     });
 
-    // به‌روزرسانی فیلد مخفی
     function updateGalleryInput() {
         var imageIds = [];
         $('#gallery-images-list .image-item').each(function () {
@@ -202,6 +178,52 @@ jQuery(document).ready(function ($) {
 
         console.log(imageIds);
         $('#gallery_items').val(imageIds.join(','));
+    }
+
+
+    let allItemsChecked = [];
+
+
+    const $checkboxes = $('#partners input[type="checkbox"]');
+
+    $checkboxes.each(function () {
+        changeTerm(this);
+    });
+
+    $checkboxes.change(function () {
+        changeTerm(this)
+    });
+
+    function changeTerm(_this) {
+
+        let id = $(_this).val();
+
+        if (_this.checked) {
+
+            allItemsChecked.push(id);
+
+            $('#term-' + id).removeClass('d-none');
+        } else {
+
+            const index = allItemsChecked.indexOf(id);
+            if (index !== -1) {
+                allItemsChecked.splice(index, 1);
+            }
+
+            $('#term-' + id).addClass('d-none');
+
+        }
+
+        if (allItemsChecked.length == 0) {
+            $('#services #isEmpty').removeClass('d-none');
+
+        } else {
+            $('#services #isEmpty').addClass('d-none');
+
+        }
+
+
+
     }
 
 
