@@ -6,6 +6,9 @@ namespace AvinGroup\App\Core;
 class Styles
 {
 
+    private $style_dep      = [  ];
+    private $javascript_dep = [ 'jquery' , 'wp-color-picker'];
+
     public function __construct()
     {
 
@@ -20,18 +23,19 @@ class Styles
         wp_enqueue_media();
 
         $this->jalalidatepicker();
+        $this->select2();
 
         wp_enqueue_style(
             'ag_admin',
             AG_CSS . 'admin.css',
-            [ 'jalalidatepicker' ],
+            $this->style_dep,
             AG_VERSION
         );
 
         wp_enqueue_script(
             'ag_admin',
             AG_JS . 'admin.js',
-            [ 'jquery', 'jalalidatepicker', 'wp-color-picker' ],
+            $this->javascript_dep,
             AG_VERSION,
             true
         );
@@ -50,6 +54,9 @@ class Styles
 
     private function select2()
     {
+
+        $this->style_dep[  ] = $this->javascript_dep[  ] = 'select2';
+
         wp_register_style(
             'select2',
             AG_VENDOR . 'select2/select2.min.css',
@@ -68,6 +75,9 @@ class Styles
 
     private function jalalidatepicker()
     {
+
+        $this->style_dep[  ] = $this->javascript_dep[  ] = 'jalalidatepicker';
+
         wp_register_style(
             'jalalidatepicker',
             AG_VENDOR . 'jalalidatepicker/jalalidatepicker.min.css',

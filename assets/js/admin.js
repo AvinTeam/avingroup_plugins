@@ -227,7 +227,18 @@ jQuery(document).ready(function ($) {
     }
 
 
-
+    $('#select2ProjectClients').select2({
+        placeholder: 'مشتری را انتخاب کنید',
+        dir: 'rtl',
+        language: {
+            noResults: function () {
+                return 'نتیجه‌ای یافت نشد.';
+            },
+            searching: function () {
+                return 'در حال جستجو...';
+            }
+        },
+    });
 
 })
 
