@@ -6,6 +6,7 @@ use AvinGroup\App\Modules\MetaBoxes\ProjectMetaBoxes;
 use AvinGroup\App\Modules\PostTypes\ClientsPostTypes;
 use AvinGroup\App\Modules\PostTypes\PartnersPostTypes;
 use AvinGroup\App\Modules\PostTypes\ProjectPostTypes;
+use AvinGroup\App\Modules\Taxonomies\ServicesTaxonomies;
 
 (defined('ABSPATH')) || exit;
 
@@ -19,6 +20,9 @@ class Init
        new ClientsPostTypes;
        new ProjectPostTypes;
        new ProjectMetaBoxes;
+
+
+       new ServicesTaxonomies;
     }
 
     

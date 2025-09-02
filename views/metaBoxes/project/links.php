@@ -2,7 +2,6 @@
 #link-list li {
     display: flex;
     flex-direction: row;
-    justify-content: baseline;
     align-items: center;
     gap: 10px;
 }

@@ -1,7 +1,9 @@
 .d-ltr {
   direction: ltr !important;
 }
-
+a {
+  text-decoration: none;
+}
 .d-none {
   display: none !important;
 }
@@ -70,4 +72,10 @@
   color: white;
   padding: 2px 5px;
   text-decoration: none;
+}
+
+
+
+#servicesdiv.postbox {
+  display: none;
 }

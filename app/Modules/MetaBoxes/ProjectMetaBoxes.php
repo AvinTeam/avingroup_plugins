@@ -50,6 +50,15 @@ class ProjectMetaBoxes extends MetaBoxes
             'side',
         );
 
+        
+        add_meta_box(
+            'services',
+            'خدمات',
+            [ $this, 'services' ],
+            'projects',
+            'side',
+        );
+
     }
 
     public function gallery($post)
@@ -142,6 +151,40 @@ class ProjectMetaBoxes extends MetaBoxes
                 'partners'  => $partners,
                 'isCorrect' => $isCorrect,
              ]);
+
+    }
+
+    public function services($post)
+    {
+
+        $isCorrect = get_post_meta(get_the_ID(), '_partner', true);
+        $isCorrect = array_map('absint', $isCorrect);
+
+        $partners = [  ];
+
+        $args = [
+            'post_type'      => 'partners',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+         ];
+
+        $posts = get_posts($args);
+
+        foreach ($posts as $post) {
+
+            $partners[  ] = [
+                'id'    => $post->ID,
+                'title' => $post->post_title,
+             ];
+        }
+
+        // view('metaBoxes/project/services',
+        //     [
+        //         'partners'  => $partners,
+        //         'isCorrect' => $isCorrect,
+        //      ]);
+        view('metaBoxes/project/services');
 
     }
 

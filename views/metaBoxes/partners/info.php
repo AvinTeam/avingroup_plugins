@@ -7,13 +7,16 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="site">رنگ</label></th>
-            <!-- <td><input name="partners[site]" type="text" id="site" value="<?php echo $site ?>"
-                    class="d-ltr regular-text">
-            </td> -->
-            <td><input name="partners[color]" type="text" id="color"
-                    value="<?php echo esc_html($color); ?>"
-                    class="regular-text inputColor">
+            <th scope="row"><label for="colorPrimary">رنگ اصلی</label></th>
+            <td><input name="partners[colorPrimary]" type="text" id="colorPrimary"
+                    value="<?php echo esc_html($colorPrimary); ?>" class="regular-text inputColor">
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row"><label for="colorSecondary">رنگ ثانویه</label></th>
+            <td><input name="partners[colorSecondary]" type="text" id="colorSecondary"
+                    value="<?php echo esc_html($colorSecondary); ?>" class="regular-text inputColor">
             </td>
         </tr>
         <tr>
