@@ -10,11 +10,8 @@ class ProjectMetaBoxes extends MetaBoxes
 
     public function __construct()
     {
-
         add_action('add_meta_boxes', [ $this, 'meta_boxes' ]);
-
         add_action('save_post', [ $this, 'save' ], 1, 3);
-
     }
 
     public function meta_boxes(): void
@@ -27,7 +24,14 @@ class ProjectMetaBoxes extends MetaBoxes
             'projects',
             'normal',
             'high'
+        );
 
+        add_meta_box(
+            'partner',
+            'مجریان',
+            [ $this, 'partner' ],
+            'projects',
+            'side',
         );
 
     }
@@ -48,8 +52,41 @@ class ProjectMetaBoxes extends MetaBoxes
 
     }
 
+    public function partner($post)
+    {
+
+        $isCorrect = intval(get_post_meta(get_the_ID(), '_partner', true));
+
+        $partners = [  ];
+
+        $args = [
+            'post_type'      => 'partners',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+         ];
+
+        $posts = get_posts($args);
+
+        foreach ($posts as $post) {
+
+            $partners[  ] = [
+                'id'    => $post->ID,
+                'title' => $post->post_title,
+             ];
+        }
+
+        view('metaBoxes/project/partners',
+            [
+                'partners'  => $partners,
+                'isCorrect' => $isCorrect,
+             ]);
+
+    }
+
     public function save($post_id, $post, $updata)
     {
+
         if (isset($_POST[ 'project' ])) {
 
             foreach ($_POST[ 'project' ] as $key => $value) {

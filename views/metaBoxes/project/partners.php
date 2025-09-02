@@ -1,0 +1,10 @@
+<div>
+    <fieldset>
+        <legend class="screen-reader-text">مجریان</legend>
+        <?php foreach ($partners as $partner): ?>
+        <input type="radio" name="project[partner]" id="partner-<?php echo $partner[ 'id' ] ?>" value="<?php echo $partner[ 'id' ] ?>"<?php checked($partner[ 'id' ], $isCorrect)?>>
+        <label for="partner-<?php echo $partner[ 'id' ] ?>"><?php echo $partner[ 'title' ] ?></label>
+        <br>
+        <?php endforeach; ?>
+    </fieldset>
+</div>
