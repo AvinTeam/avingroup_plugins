@@ -35,9 +35,17 @@ class ProjectMetaBoxes extends MetaBoxes
         );
 
         add_meta_box(
-            'partner',
+            'client',
+            'مشتری',
+            [ $this, 'client' ],
+            'projects',
+            'side',
+        );
+
+        add_meta_box(
+            'partners',
             'مجریان',
-            [ $this, 'partner' ],
+            [ $this, 'partners' ],
             'projects',
             'side',
         );
@@ -72,10 +80,43 @@ class ProjectMetaBoxes extends MetaBoxes
 
     }
 
-    public function partner($post)
+    public function client($post)
     {
 
-        $isCorrect = intval(get_post_meta(get_the_ID(), '_partner', true));
+        $isCorrect = intval(get_post_meta(get_the_ID(), '_client', true));
+
+        $clients = [  ];
+
+        $args = [
+            'post_type'      => 'clients',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+         ];
+
+        $posts = get_posts($args);
+
+        foreach ($posts as $post) {
+
+            $clients[  ] = [
+                'id'    => $post->ID,
+                'title' => $post->post_title,
+             ];
+        }
+
+        view('metaBoxes/project/clients',
+            [
+                'clients'   => $clients,
+                'isCorrect' => $isCorrect,
+             ]);
+
+    }
+
+    public function partners($post)
+    {
+
+        $isCorrect = get_post_meta(get_the_ID(), '_partner', true);
+        $isCorrect = array_map('absint', $isCorrect);
 
         $partners = [  ];
 
@@ -106,7 +147,6 @@ class ProjectMetaBoxes extends MetaBoxes
 
     public function save($post_id, $post, $updata)
     {
-
         if (isset($_POST[ 'project' ])) {
 
             foreach ($_POST[ 'project' ] as $key => $value) {
@@ -120,6 +160,9 @@ class ProjectMetaBoxes extends MetaBoxes
                 update_post_meta($post_id, '_' . $key, $value);
             }
 
+            if (! isset($_POST[ 'project' ][ 'partner' ])) {
+                update_post_meta($post_id, '_partner', [  ]);
+            }
         }
     }
 
