@@ -40,8 +40,9 @@ class Styles
             'ag_admin',
             'ag_js',
             [
-                'ajaxurl' => admin_url('admin-ajax.php'),
-                'nonce'   => wp_create_nonce('ajax-nonce'),
+                'ajaxurl'  => admin_url('admin-ajax.php'),
+                'nonce'    => wp_create_nonce('ajax-nonce'),
+                'linkList' => config('app.linkList', [  ]),
              ]
         );
 

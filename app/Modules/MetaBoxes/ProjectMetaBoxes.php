@@ -25,6 +25,14 @@ class ProjectMetaBoxes extends MetaBoxes
             'normal',
             'high'
         );
+        add_meta_box(
+            'links',
+            'لینک ها',
+            [ $this, 'links' ],
+            'projects',
+            'normal',
+            'high'
+        );
 
         add_meta_box(
             'partner',
@@ -48,6 +56,18 @@ class ProjectMetaBoxes extends MetaBoxes
                 'gallery'            => $gallery,
                 'image_ids'          => (empty($gallery)) ? [  ] : explode(',', $gallery),
                 'galleryDescription' => $galleryDescription,
+             ]);
+
+    }
+
+    public function links($post)
+    {
+
+        $links = get_post_meta(get_the_ID(), '_links', true);
+
+        view('metaBoxes/project/links',
+            [
+                'links' => $links,
              ]);
 
     }
@@ -90,6 +110,13 @@ class ProjectMetaBoxes extends MetaBoxes
         if (isset($_POST[ 'project' ])) {
 
             foreach ($_POST[ 'project' ] as $key => $value) {
+
+                if ($key == 'links') {
+                    $value = array_filter($value, function ($item) {
+                        return ! empty($item[ 'link' ]);
+                    });
+                }
+
                 update_post_meta($post_id, '_' . $key, $value);
             }
 

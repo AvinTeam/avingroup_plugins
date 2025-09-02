@@ -9,13 +9,44 @@ jQuery(document).ready(function ($) {
 
     $('.inputColor').wpColorPicker();
 
-
     $('.onlyNumbersInput').on('input paste', function () {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
+    let nextItem = 0;
+    $('#add-link-item').click(function (e) {
+        e.preventDefault();
+
+        if (nextItem == 0) {
+            nextItem = Number($(this).attr('data-next-item'));
+        }
+        nextItem += 1;
+
+        const options = Object.entries(ag_js.linkList).map(([key, name]) => {
+            return `<option value="${key}">${name}</option>`;
+        });
+
+        const optionsString = options.join('\n');
+
+        $('#link-list').append(`
+            <li>
+                <select name="project[links][${nextItem}][type]">
+                    ${optionsString}
+                </select>
+                <input name="project[links][${nextItem}][link]" type="url" class="w-100 regular-text">
+                <button type="button" class="button button-error">حذف</button>
+            </li>
+        `);
 
 
+    });
+
+    //     $('#remove-link-item').click(function (e) {
+    //     e.preventDefault();
+
+
+
+    // });
 
 
 
@@ -91,20 +122,6 @@ jQuery(document).ready(function ($) {
         $(this).parent().remove();
         updateGalleryInput();
     });
-
-    // ذخیره تغییرات با AJAX
-    // $('#save-gallery').click(function (e) {
-    //     e.preventDefault();
-    //     console.log(zba_js.ajaxurl);
-    //     $.post(zba_js.ajaxurl, {
-    //         action: 'save_zba_galleries',
-    //         image_ids: $('#zba_galleries').val(),
-    //         gallery_type: $('#gallery_type').val(),
-    //         security: zba_js.nonce
-    //     }, function (response) {
-    //         alert('تغییرات ذخیره شد!');
-    //     });
-    // });
 
     // به‌روزرسانی فیلد مخفی
     function updateGalleryInput() {
