@@ -155,10 +155,6 @@ class ProjectMetaBoxes extends MetaBoxes
 
     public function services($post)
     {
-
-        $isCorrect = get_post_meta(get_the_ID(), '_partner', true);
-        $isCorrect = array_map('absint', $isCorrect);
-
         $services     = [  ];
         $servicesName = [  ];
 
@@ -178,7 +174,7 @@ class ProjectMetaBoxes extends MetaBoxes
 
             $servicesId = intval(get_post_meta($partner->ID, '_servicesId', true));
 
-            foreach (get_term_children($servicesId, 'services') as $term_id) {  
+            foreach (get_term_children($servicesId, 'services') as $term_id) {
                 $term = get_term($term_id, 'services');
 
                 $services[ 'term-' . $partner->ID ][  ] = [
@@ -189,10 +185,13 @@ class ProjectMetaBoxes extends MetaBoxes
             }
         }
 
+        $allItemsChecked = wp_get_object_terms(get_the_ID(), 'services', [ 'fields' => 'ids' ]);
+
         view('metaBoxes/project/services',
             [
-                'services'     => $services,
-                'servicesName' => $servicesName,
+                'services'        => $services,
+                'servicesName'    => $servicesName,
+                'allItemsChecked' => $allItemsChecked,
              ]);
 
     }
@@ -216,6 +215,31 @@ class ProjectMetaBoxes extends MetaBoxes
                 update_post_meta($post_id, '_partner', [  ]);
             }
         }
+
+        $terms = [  ];
+        $test  = [  ];
+        if (isset($_POST[ 'project_services_array' ])) {
+
+            $isCorrect = [  ];
+            $partners  = array_map('intval', get_post_meta(get_the_ID(), '_partner', true));
+
+            foreach ($partners as $id) {
+
+                $isCorrect[  ] = intval(get_post_meta($id, '_servicesId', true));
+            }
+
+            foreach ($_POST[ 'project_services_array' ] as $term_id) {
+
+                $term = get_term($term_id, 'services');
+
+                $test[  ] = [ $term->parent, $isCorrect, in_array($term->parent, $isCorrect) ];
+
+                if (in_array($term->parent, $isCorrect)) {$terms[  ] = intval($term_id);}
+            }
+
+        }
+
+        wp_set_object_terms($post_id, $terms, 'services');
     }
 
 }

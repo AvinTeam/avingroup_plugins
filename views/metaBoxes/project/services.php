@@ -15,8 +15,8 @@
 
             <?php foreach ($service as $row): ?>
             <div>
-                <input type="checkbox" name="project[partner][]" id="partner-id" value="<?php echo $row[ "id" ] ?>">
-                <label for="partner-id"><?php echo $row[ "title" ] ?></label>
+                <input type="checkbox" name="project_services_array[]" id="service-<?php echo $row[ "id" ] ?>" value="<?php echo $row[ "id" ] ?>"    <?php if(in_array($row[ 'id' ], $allItemsChecked)){echo 'checked="checked"';}?>   >
+                <label for="service-<?php echo $row[ "id" ] ?>"><?php echo $row[ "title" ] ?></label>
             </div>
             <?php endforeach; ?>
         </fieldset>
