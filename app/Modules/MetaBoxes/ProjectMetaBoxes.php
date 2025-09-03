@@ -175,20 +175,17 @@ class ProjectMetaBoxes extends MetaBoxes
             $services[ 'term-' . $partner->ID ]     = [  ];
             $servicesName[ 'term-' . $partner->ID ] = $partner->post_title;
 
-            $servicesId = intval(get_post_meta($partner->ID, '_servicesId', true));
-
-            foreach (get_term_children($servicesId, 'services') as $term_id) {
-                $term = get_term($term_id, 'services');
+            foreach (wp_get_object_terms($partner->ID, 'partners_services') as $term) {
 
                 $services[ 'term-' . $partner->ID ][  ] = [
-                    'id'    => $term_id,
+                    'id'    => intval($term->term_id),
                     'title' => $term->name,
                  ];
 
             }
         }
 
-        $allItemsChecked = wp_get_object_terms(get_the_ID(), 'services', [ 'fields' => 'ids' ]);
+        $allItemsChecked = wp_get_object_terms(get_the_ID(), 'partners_services', [ 'fields' => 'ids' ]);
 
         view('metaBoxes/project/services',
             [
@@ -201,48 +198,47 @@ class ProjectMetaBoxes extends MetaBoxes
 
     public function save($post_id, $post, $updata)
     {
-        if (isset($_POST[ 'project' ])) {
 
-            foreach ($_POST[ 'project' ] as $key => $value) {
+        if ($post->post_type == 'projects') {
 
-                if ($key == 'links') {
-                    $value = array_filter($value, function ($item) {
-                        return ! empty($item[ 'link' ]);
-                    });
+            if (isset($_POST[ 'project' ])) {
+
+                foreach ($_POST[ 'project' ] as $key => $value) {
+
+                    if ($key == 'links') {
+                        $value = array_filter($value, function ($item) {
+                            return ! empty($item[ 'link' ]);
+                        });
+                    }
+
+                    update_post_meta($post_id, '_' . $key, $value);
                 }
 
-                update_post_meta($post_id, '_' . $key, $value);
+                if (! isset($_POST[ 'project' ][ 'partner' ])) {
+                    update_post_meta($post_id, '_partner', [  ]);
+                }
             }
 
-            if (! isset($_POST[ 'project' ][ 'partner' ])) {
-                update_post_meta($post_id, '_partner', [  ]);
+            $terms = [  ];
+            if (isset($_POST[ 'project_services_array' ])) {
+
+                $isCorrect = [  ];
+                $partners  = array_map('intval', get_post_meta(get_the_ID(), '_partner', true));
+
+                foreach ($partners as $id) {
+
+                    $isCorrect = array_merge(wp_get_object_terms($id, 'partners_services', [ 'fields' => 'ids' ]), $isCorrect);
+                }
+
+                foreach ($_POST[ 'project_services_array' ] as $term_id) {
+
+                    if (in_array($term_id, $isCorrect)) {$terms[  ] = intval($term_id);}
+                }
             }
-        }
 
-        $terms = [  ];
-        $test  = [  ];
-        if (isset($_POST[ 'project_services_array' ])) {
-
-            $isCorrect = [  ];
-            $partners  = array_map('intval', get_post_meta(get_the_ID(), '_partner', true));
-
-            foreach ($partners as $id) {
-
-                $isCorrect[  ] = intval(get_post_meta($id, '_servicesId', true));
-            }
-
-            foreach ($_POST[ 'project_services_array' ] as $term_id) {
-
-                $term = get_term($term_id, 'services');
-
-                $test[  ] = [ $term->parent, $isCorrect, in_array($term->parent, $isCorrect) ];
-
-                if (in_array($term->parent, $isCorrect)) {$terms[  ] = intval($term_id);}
-            }
+            wp_set_object_terms($post_id, $terms, 'partners_services');
 
         }
-
-        wp_set_object_terms($post_id, $terms, 'services');
     }
 
 }

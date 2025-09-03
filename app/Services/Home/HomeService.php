@@ -112,7 +112,7 @@ class HomeService extends Service
             $client_id = intval(get_post_meta($project->ID, '_client', true));
             $services  = [  ];
 
-            foreach (wp_get_object_terms($project->ID, 'services') as $term) {
+            foreach (wp_get_object_terms($project->ID, 'partners_services') as $term) {
 
                 $services[  ] = [
                     'id'   => intval($term->term_id),
