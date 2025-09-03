@@ -34,10 +34,13 @@ class HomeService extends Service
 
             foreach (wp_get_object_terms($partner->ID, 'partners_services') as $term) {
 
+                $icon_id = get_term_meta($term->term_id, 'service_icon', true);
+
                 $services[  ] = [
                     'id'    => intval($term->term_id),
                     'title' => $term->name,
-                    'slug' => $term->slug,
+                    'image' => ($icon_id) ? wp_get_attachment_image_url($icon_id, 'full') : '',
+                    'slug'  => $term->slug,
                  ];
 
             }
