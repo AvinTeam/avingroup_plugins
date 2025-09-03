@@ -1,21 +1,21 @@
 <?php
-namespace AvinGroup\App\Controllers\Menu;
+namespace AvinGroup\App\Controllers\Options;
 
 use AvinGroup\App\Controllers\Controller;
-use AvinGroup\App\Services\Menu\MenuService;
+use AvinGroup\App\Services\Options\OptionsService;
 use Exception;
 
 (defined('ABSPATH')) || exit;
 
-class MenuController extends Controller
+class OptionsController extends Controller
 {
 
-    protected $MenuService;
+    protected $optionsService;
 
     public function __construct()
     {
 
-        $this->MenuService = new MenuService;
+        $this->optionsService = new OptionsService;
 
     }
 
@@ -24,7 +24,7 @@ class MenuController extends Controller
 
         try {
 
-            wp_send_json_success($this->MenuService->index(), 200);
+            wp_send_json_success($this->optionsService->index(), 200);
 
         } catch (Exception $e) {
 

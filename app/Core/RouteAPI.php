@@ -2,7 +2,7 @@
 namespace AvinGroup\App\Core;
 
 use AvinGroup\App\Modules\RestAPIs\Home;
-use AvinGroup\App\Modules\RestAPIs\Menu;
+use AvinGroup\App\Modules\RestAPIs\Options;
 
 (defined('ABSPATH')) || exit;
 
@@ -11,7 +11,7 @@ class RouteAPI
 
     public function __construct()
     {
-        new Menu;
+        new Options;
         new Home;
 
     }

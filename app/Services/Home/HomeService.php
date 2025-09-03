@@ -32,7 +32,7 @@ class HomeService extends Service
 
         foreach ($partners as $partner) {
 
-            foreach (wp_get_object_terms($partner->ID, 'partners_services') as $term) {
+            foreach (wp_get_object_terms($partner->ID, 'service') as $term) {
 
                 $icon_id = get_term_meta($term->term_id, 'service_icon', true);
 
@@ -124,7 +124,7 @@ class HomeService extends Service
             $client_id = intval(get_post_meta($project->ID, '_client', true));
             $services  = [  ];
 
-            foreach (wp_get_object_terms($project->ID, 'partners_services') as $term) {
+            foreach (wp_get_object_terms($project->ID, 'service') as $term) {
 
                 $services[  ] = [
                     'id'   => intval($term->term_id),

@@ -175,7 +175,7 @@ class ProjectMetaBoxes extends MetaBoxes
             $services[ 'term-' . $partner->ID ]     = [  ];
             $servicesName[ 'term-' . $partner->ID ] = $partner->post_title;
 
-            foreach (wp_get_object_terms($partner->ID, 'partners_services') as $term) {
+            foreach (wp_get_object_terms($partner->ID, 'service') as $term) {
 
                 $services[ 'term-' . $partner->ID ][  ] = [
                     'id'    => intval($term->term_id),
@@ -185,7 +185,7 @@ class ProjectMetaBoxes extends MetaBoxes
             }
         }
 
-        $allItemsChecked = wp_get_object_terms(get_the_ID(), 'partners_services', [ 'fields' => 'ids' ]);
+        $allItemsChecked = wp_get_object_terms(get_the_ID(), 'service', [ 'fields' => 'ids' ]);
 
         view('metaBoxes/project/services',
             [
@@ -227,7 +227,7 @@ class ProjectMetaBoxes extends MetaBoxes
 
                 foreach ($partners as $id) {
 
-                    $isCorrect = array_merge(wp_get_object_terms($id, 'partners_services', [ 'fields' => 'ids' ]), $isCorrect);
+                    $isCorrect = array_merge(wp_get_object_terms($id, 'service', [ 'fields' => 'ids' ]), $isCorrect);
                 }
 
                 foreach ($_POST[ 'project_services_array' ] as $term_id) {
@@ -236,7 +236,7 @@ class ProjectMetaBoxes extends MetaBoxes
                 }
             }
 
-            wp_set_object_terms($post_id, $terms, 'partners_services');
+            wp_set_object_terms($post_id, $terms, 'service');
 
         }
     }

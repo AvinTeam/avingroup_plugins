@@ -1,13 +1,13 @@
 <?php
 namespace AvinGroup\App\Modules\RestAPIs;
 
-use AvinGroup\App\Controllers\Menu\MenuController;
+use AvinGroup\App\Controllers\Options\OptionsController;
 use AvinGroup\App\Core\RestAPIs;
 use WP_REST_Request;
 
 (defined('ABSPATH')) || exit;
 
-class Menu extends RestAPIs
+class Options extends RestAPIs
 {
 
     public function __construct()
@@ -19,7 +19,7 @@ class Menu extends RestAPIs
     public function register_routes()
     {
 
-        register_rest_route($this->namespace, '/menus/?', [
+        register_rest_route($this->namespace, '/options/?', [
             'methods'             => 'GET',
             'callback'            => [ $this, 'callback' ],
             'permission_callback' => '__return_true',
@@ -30,17 +30,7 @@ class Menu extends RestAPIs
     public function callback(WP_REST_Request $request)
     {
 
-
-       (new MenuController)->index();
-
-
-
-
-
-
-
-
-    
+        (new OptionsController)->index();
 
     }
 

@@ -36,8 +36,6 @@ class SettingMenu extends Menu
 
         $setting[ "logoImage" ] = (! empty($setting[ "logo" ])) ? wp_get_attachment_url($setting[ "logo" ]) : '';
 
-        // $setting[ "social" ] = [];
-
         view('menus/setting', $setting);
 
     }

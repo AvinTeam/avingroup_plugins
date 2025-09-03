@@ -1,20 +1,25 @@
 <?php
-namespace AvinGroup\App\Services\Menu;
+namespace AvinGroup\App\Services\Options;
 
+use AvinGroup\App\Options\Settings;
 use AvinGroup\App\Services\Service;
 
 (defined('ABSPATH')) || exit;
 
-class MenuService extends Service
+class OptionsService extends Service
 {
 
     public function index()
     {
 
-        return [
-            'header-menu' => $this->get_menu_by_location('main-menu'),
-            'footer-menu' => $this->get_menu_by_location('footer-menu'),
-         ];
+        $setting = Settings::get();
+
+        $setting[ "logo" ] = (! empty($setting[ "logo" ])) ? wp_get_attachment_url($setting[ "logo" ]) : '';
+
+        $setting[ 'header-menu' ] = $this->get_menu_by_location('main-menu');
+        $setting[ 'footer-menu' ] = $this->get_menu_by_location('footer-menu');
+
+        return $setting;
 
     }
 
@@ -25,14 +30,14 @@ class MenuService extends Service
 
         if (! isset($menu_locations[ $location ])) {
 
-            throw new \Exception('منویی در این موقعیت ' . $location . ' یافت نشد', 404);
+            return [  ];
         }
 
         $menu_items = wp_get_nav_menu_items($menu_locations[ $location ]);
 
         if (empty($menu_items)) {
 
-            throw new \Exception('هیچ آیتمی در ' . $location . ' وجود ندارد', 404);
+            return [  ];
 
         }
 
@@ -54,7 +59,8 @@ class MenuService extends Service
             $formatted_item = [
                 'id'       => $item->ID,
                 'title'    => $item->title,
-                'url'      => $item->url,
+                'url'      => ($item->object == "custom") ? $item->url : basename(rtrim($item->url, '/')),
+                'type'     => $item->object,
                 'children' => [  ],
              ];
 
@@ -81,7 +87,8 @@ class MenuService extends Service
                 $child_item = [
                     'id'       => $item->ID,
                     'title'    => $item->title,
-                    'url'      => $item->url,
+                    'url'      => ($item->object == "custom") ? $item->url : basename(rtrim($item->url, '/')),
+                    'type'     => $item->object,
                     'children' => $this->get_menu_children($menu_items, $item->ID),
                  ];
 

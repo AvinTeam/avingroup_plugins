@@ -9,19 +9,19 @@ class ServicesTaxonomies extends Taxonomies
 {
     public function __construct()
     {
-        add_action('init', [ $this, 'partners_services' ]);
+        add_action('init', [ $this, 'service' ]);
 
-        add_action('partners_services_add_form_fields', [ $this, 'add_service_fields' ]);
-        add_action('created_partners_services', [ $this, 'save_service_fields' ]);
+        add_action('service_add_form_fields', [ $this, 'add_service_fields' ]);
+        add_action('created_service', [ $this, 'save_service_fields' ]);
 
-        add_action('partners_services_edit_form_fields', [ $this, 'edit_service_fields' ]);
-        add_action('edited_partners_services', [ $this, 'save_service_fields' ]);
+        add_action('service_edit_form_fields', [ $this, 'edit_service_fields' ]);
+        add_action('edited_service', [ $this, 'save_service_fields' ]);
 
-        add_filter('manage_edit-partners_services_columns', [ $this, 'add_service_columns' ]);
-        add_filter('manage_partners_services_custom_column', [ $this, 'add_service_column_content' ], 10, 3);
+        add_filter('manage_edit-service_columns', [ $this, 'add_service_columns' ]);
+        add_filter('manage_service_custom_column', [ $this, 'add_service_column_content' ], 10, 3);
     }
 
-    public function partners_services()
+    public function service()
     {
         $labels = [
             'name'                  => 'خدمات همکاران',
@@ -47,10 +47,10 @@ class ServicesTaxonomies extends Taxonomies
             'show_in_rest'      => true,
             'show_admin_column' => true,
             'query_var'         => true,
-            'rewrite'           => [ 'slug' => 'partners_services', 'with_front' => false ],
+            'rewrite'           => [ 'slug' => 'service', 'with_front' => false ],
          ];
 
-        register_taxonomy('partners_services', 'partners', $args);
+        register_taxonomy('service', 'partners', $args);
     }
 
     public function add_service_fields()
@@ -115,7 +115,7 @@ class ServicesTaxonomies extends Taxonomies
                 'post_type'      => 'partners',
                 'tax_query'      => [
                     [
-                        'taxonomy' => 'partners_services',
+                        'taxonomy' => 'service',
                         'field'    => 'term_id',
                         'terms'    => $term_id,
                      ],
