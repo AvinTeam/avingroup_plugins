@@ -33,7 +33,7 @@ function ddd(mixed ...$values)
 
         foreach ($values as $value) {
 
-            $data[ 'data' . $m ] = print_r($value, true);
+            $data[ 'data' . $m ] = $value;
 
             $m++;
 

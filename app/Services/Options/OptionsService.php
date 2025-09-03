@@ -11,16 +11,12 @@ class OptionsService extends Service
 
     public function index()
     {
-
         $setting = Settings::get();
-
         $setting[ "logo" ] = (! empty($setting[ "logo" ])) ? wp_get_attachment_url($setting[ "logo" ]) : '';
-
         $setting[ 'header-menu' ] = $this->get_menu_by_location('main-menu');
         $setting[ 'footer-menu' ] = $this->get_menu_by_location('footer-menu');
 
         return $setting;
-
     }
 
     public function get_menu_by_location($location)
