@@ -12,7 +12,7 @@ class HomeService extends Service
     {
 
         return [
-            'header-menu' => '',
+      
 
          ];
 
@@ -39,7 +39,6 @@ class HomeService extends Service
                 'id'             => $partner->ID,
                 'title'          => $partner->post_title,
                 'image'          => post_image_url($partner->ID),
-
                 'colorPrimary'   => get_post_meta($partner->ID, '_colorPrimary', true),
                 'colorSecondary' => get_post_meta($partner->ID, '_colorSecondary', true),
                 'slogan'         => get_post_meta($partner->ID, '_slogan', true),
@@ -53,5 +52,57 @@ class HomeService extends Service
         return $list;
 
     }
+
+
+
+
+
+
+
+
+   public function clients()
+    {
+
+        $list = [  ];
+
+        $args = [
+            'post_type'      => 'clients',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'post_status'    => 'publish',
+         ];
+
+        $clients = get_posts($args);
+
+        foreach ($clients as $client) {
+
+            $list[  ] = [
+                'id'             => $client->ID,
+                'title'          => $client->post_title,
+                'image'          => post_image_url($client->ID),
+             ];
+        }
+
+        return $list;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
