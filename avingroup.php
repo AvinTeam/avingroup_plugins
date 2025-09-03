@@ -25,11 +25,9 @@
 use AvinGroup\App\Core\Accesses;
 use AvinGroup\App\Core\FunctionAutoloader;
 use AvinGroup\App\Core\Init;
-use AvinGroup\App\Core\Install;
 use AvinGroup\App\Core\MetaBoxes;
-use AvinGroup\App\Core\RestAPI;
+use AvinGroup\App\Core\RouteAPI;
 use AvinGroup\App\Core\Styles;
-use AvinGroup\App\Modules\Menus\SettingMenu;
 use Dotenv\Dotenv;
 
 defined('ABSPATH') || exit;
@@ -54,8 +52,6 @@ define('AG_JS', AG_ASSETS . 'js/');
 define('AG_IMAGE', AG_ASSETS . 'images/');
 define('AG_VENDOR', AG_ASSETS . 'vendor/');
 
-
-
 if (file_exists(AG_PATH . '/vendor/autoload.php')) {
     require_once AG_PATH . '/vendor/autoload.php';
 }
@@ -65,19 +61,17 @@ if (class_exists(Dotenv::class)) {
     $dotenv->load();
 }
 
-
 new FunctionAutoloader;
 
 new Accesses;
 new Init;
 new Styles;
 new MetaBoxes;
-new RestAPI;
+new RouteAPI;
 
 if (is_admin()) {
     // new Install;
     // new SettingMenu;
-
 
 }
 if (isset($_GET[ 'test' ])) {

@@ -84,7 +84,6 @@ class PartnersMetaBoxes extends MetaBoxes
             view('metaBoxes/partners/services',
                 [
                     'terms' => $terms,
-
                  ]);
         }
 
