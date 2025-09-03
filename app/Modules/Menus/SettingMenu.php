@@ -2,7 +2,7 @@
 namespace AvinGroup\App\Modules\Menus;
 
 use AvinGroup\App\Core\Menu;
-use AvinGroup\App\Core\Option;
+use AvinGroup\App\Options\Settings;
 
 (defined('ABSPATH')) || exit;
 
@@ -16,14 +16,13 @@ class SettingMenu extends Menu
     public function admin_menu(string $context): void
     {
 
-        $suffix = add_menu_page(
-            'تنظیمات',
-            'تنظیمات',
+        $suffix = add_submenu_page(
+            'options-general.php',
+            'تنظیمات آوین گروپ',
+            'تنظیمات آوین گروپ',
             'manage_options',
-            'setting-menu',
+            'avingroup-setting',
             [ $this, 'view' ],
-            'dashicons-admin-tools',
-            1
         );
 
         add_action('load-' . $suffix, [ $this, 'processing' ]);
@@ -33,7 +32,13 @@ class SettingMenu extends Menu
     public function view()
     {
 
-        view('menus/setting', [ 'setting' => Option::getSetting() ]);
+        $setting = Settings::get();
+
+        $setting[ "logoImage" ] = (! empty($setting[ "logo" ])) ? wp_get_attachment_url($setting[ "logo" ]) : '';
+
+        // $setting[ "social" ] = [];
+
+        view('menus/setting', $setting);
 
     }
 
@@ -41,9 +46,7 @@ class SettingMenu extends Menu
     {
         if (isset($_POST[ 'act' ]) && $_POST[ 'act' ] == "settingSubmit" && wp_verify_nonce($_POST[ '_wpnonce' ], config('app.key') . '_setting_' . get_current_user_id())) {
 
-
-            Option::setSetting($_POST["setting"]);
-
+            Settings::set($_POST[ "setting" ]);
 
             $this->success('تغییر با موفقیت انجام شد');
 

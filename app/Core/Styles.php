@@ -47,6 +47,7 @@ class Styles
                 'ajaxurl'  => admin_url('admin-ajax.php'),
                 'nonce'    => wp_create_nonce('ajax-nonce'),
                 'linkList' => config('app.linkList', [  ]),
+                'socials' => config('app.socials', [  ]),
              ]
         );
 

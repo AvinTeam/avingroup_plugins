@@ -12,14 +12,14 @@
 </div>
 
 <div class="form-field">
-    <label for="service_poster">پستر خدمت</label>
+    <label for="service_poster">پوستر خدمت</label>
     <input type="hidden" name="service_poster" id="service_poster" value="" />
     <div id="service_poster_preview" style="margin: 10px 0; display: none;">
         <img src="" style="max-width: 200px; height: auto;" />
     </div>
     <input type="button" class="button button-secondary" id="upload_service_poster"
-        value="آپلود پستر" />
+        value="آپلود پوستر" />
     <input type="button" class="button button-secondary" id="remove_service_poster"
-        value="حذف پستر" style="display: none;" />
-    <p class="description">پستر خدمت را انتخاب کنید</p>
+        value="حذف پوستر" style="display: none;" />
+    <p class="description">پوستر خدمت را انتخاب کنید</p>
 </div>

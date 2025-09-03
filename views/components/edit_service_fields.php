@@ -19,20 +19,20 @@
 
 <tr class="form-field">
     <th scope="row">
-        <label for="service_poster">پستر خدمت</label>
+        <label for="service_poster">پوستر خدمت</label>
     </th>
     <td>
         <input type="hidden" name="service_poster" id="service_poster" value="<?php echo esc_attr($poster_id); ?>" />
         <div id="service_poster_preview" style="margin: 10px 0;">
             <?php if ($poster_url): ?>
-            <img src="<?php echo esc_url($poster_url); ?>" style="max-width: 200px; height: auto;" />
+            <img src="<?php echo esc_url($logoImage) ?? ''; ?>" style="max-width: 200px; height: auto;" />
             <?php endif; ?>
         </div>
         <input type="button" class="button button-secondary" id="upload_service_poster"
-            value="آپلود پستر" />
+            value="آپلود پوستر" />
         <input type="button" class="button button-secondary" id="remove_service_poster"
-            value="حذف پستر"
+            value="حذف پوستر"
             style="<?php echo ! $poster_id ? 'display: none;' : ''; ?>" />
-        <p class="description">پستر خدمت را انتخاب کنید</p>
+        <p class="description">پوستر خدمت را انتخاب کنید</p>
     </td>
 </tr>

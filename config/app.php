@@ -11,4 +11,14 @@ return [
         'myket' => 'مایکت',
         'iapps' => 'آی‌اپس',
     ],
+
+    'socials' => [
+        'aparat' => 'آپارات',
+        'youtube' => 'یوتیوب',
+        'telegram' => 'تلگرام',
+        'bale' => 'بله',
+        'eitaa' => 'ایتا',
+        'rubika' => 'روبیکا',
+
+    ],
  ];

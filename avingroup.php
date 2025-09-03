@@ -28,6 +28,7 @@ use AvinGroup\App\Core\Init;
 use AvinGroup\App\Core\MetaBoxes;
 use AvinGroup\App\Core\RouteAPI;
 use AvinGroup\App\Core\Styles;
+use AvinGroup\App\Modules\Menus\SettingMenu;
 use Dotenv\Dotenv;
 
 defined('ABSPATH') || exit;
@@ -71,7 +72,7 @@ new RouteAPI;
 
 if (is_admin()) {
     // new Install;
-    // new SettingMenu;
+    new SettingMenu;
 
 }
 if (isset($_GET[ 'test' ])) {

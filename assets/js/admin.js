@@ -46,7 +46,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var frame = wp.media({
-            title: 'انتخاب پستر',
+            title: 'انتخاب پوستر',
             button: {
                 text: 'استفاده از این تصویر'
             },
@@ -72,6 +72,29 @@ jQuery(document).ready(function ($) {
     });
 
 
+
+
+    $('#upload_logo').on('click', function (e) {
+        e.preventDefault();
+
+        var frame = wp.media({
+            title: 'انتخاب اوگو',
+            button: {
+                text: 'استفاده از این تصویر'
+            },
+            multiple: false
+        });
+
+        frame.on('select', function () {
+            var attachment = frame.state().get('selection').first().toJSON();
+            $('#logo').val(attachment.id);
+            $('#logo_preview').html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto;" />');
+            $('#logo_preview').show();
+        });
+
+        frame.open();
+    });
+
     let nextItem = 0;
     $('#add-link-item').click(function (e) {
         e.preventDefault();
@@ -93,6 +116,36 @@ jQuery(document).ready(function ($) {
                     ${optionsString}
                 </select>
                 <input name="project[links][${nextItem}][link]" type="url" class="w-100 regular-text">
+                <button type="button" class="button button-error">حذف</button>
+            </li>
+        `);
+
+
+    });
+
+
+
+    let nextItemSocial = 0;
+    $('#add-social-item').click(function (e) {
+        e.preventDefault();
+
+        if (nextItemSocial == 0) {
+            nextItemSocial = Number($(this).attr('data-next-item'));
+        }
+        nextItemSocial += 1;
+
+        const options = Object.entries(ag_js.socials).map(([key, name]) => {
+            return `<option value="${key}">${name}</option>`;
+        });
+
+        const optionsString = options.join('\n');
+
+        $('#link-list').append(`
+            <li>
+                <select name="setting[social][${nextItemSocial}][type]">
+                    ${optionsString}
+                </select>
+                <input name="setting[social][${nextItemSocial}][link]" type="url" class="regular-text">
                 <button type="button" class="button button-error">حذف</button>
             </li>
         `);
