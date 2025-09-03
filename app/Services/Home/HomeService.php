@@ -20,8 +20,6 @@ class HomeService extends Service
     public function partners()
     {
 
-        $list = [  ];
-
         $args = [
             'post_type'      => 'partners',
             'posts_per_page' => -1,
@@ -34,6 +32,16 @@ class HomeService extends Service
 
         foreach ($partners as $partner) {
 
+            foreach (wp_get_object_terms($partner->ID, 'partners_services') as $term) {
+
+                $services[  ] = [
+                    'id'    => intval($term->term_id),
+                    'title' => $term->name,
+                    'slug' => $term->slug,
+                 ];
+
+            }
+
             $list[  ] = [
                 'id'             => $partner->ID,
                 'title'          => $partner->post_title,
@@ -45,11 +53,12 @@ class HomeService extends Service
                 'site'           => get_post_meta($partner->ID, '_site', true),
                 'phone'          => get_post_meta($partner->ID, '_phone', true),
                 'email'          => get_post_meta($partner->ID, '_email', true),
+                'services'       => $services ?? [  ],
 
              ];
         }
 
-        return $list;
+        return $list ?? [  ];
 
     }
 
