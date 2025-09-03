@@ -27,6 +27,7 @@ class HomeController extends Controller
             wp_send_json_success([
                 'partners' => $this->homeService->partners(),
                 'clients' => $this->homeService->clients(),
+                'projects' => $this->homeService->projects(),
              ]);
 
         } catch (Exception $e) {
