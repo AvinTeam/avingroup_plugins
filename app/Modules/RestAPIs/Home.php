@@ -29,18 +29,7 @@ class Home extends RestAPIs
 
     public function callback(WP_REST_Request $request)
     {
-
-
-       (new HomeController)->index();
-
-
-
-
-
-
-
-
-    
+        (new HomeController)->index();
 
     }
 

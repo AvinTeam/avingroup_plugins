@@ -12,85 +12,46 @@ class HomeService extends Service
     {
 
         return [
-            'header-menu' => $this->get_menu_by_location('main-menu'),
+            'header-menu' => '',
 
          ];
 
     }
 
-    // menu
-    public function get_menu_by_location($location)
+    public function partners()
     {
 
-        $menu_locations = get_nav_menu_locations();
+        $list = [  ];
 
-        if (! isset($menu_locations[ $location ])) {
+        $args = [
+            'post_type'      => 'partners',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'post_status'    => 'publish',
+         ];
 
-            throw new \Exception('منویی در این موقعیت یافت نشد', 404);
-        }
+        $partners = get_posts($args);
 
-        $menu_items = wp_get_nav_menu_items($menu_locations[ $location ]);
+        foreach ($partners as $partner) {
 
-        if (empty($menu_items)) {
+            $list[  ] = [
+                'id'             => $partner->ID,
+                'title'          => $partner->post_title,
+                'image'          => post_image_url($partner->ID),
 
-            throw new \Exception('هیچ آیتمی در این منو وجود ندارد', 404);
+                'colorPrimary'   => get_post_meta($partner->ID, '_colorPrimary', true),
+                'colorSecondary' => get_post_meta($partner->ID, '_colorSecondary', true),
+                'slogan'         => get_post_meta($partner->ID, '_slogan', true),
+                'site'           => get_post_meta($partner->ID, '_site', true),
+                'phone'          => get_post_meta($partner->ID, '_phone', true),
+                'email'          => get_post_meta($partner->ID, '_email', true),
 
-        }
-
-        $formatted_menu = $this->format_menu_items($menu_items);
-
-        return $formatted_menu;
-    }
-
-    public function format_menu_items($menu_items)
-    {
-        $formatted        = [  ];
-        $menu_items_by_id = [  ];
-
-        foreach ($menu_items as $item) {
-            $menu_items_by_id[ $item->ID ] = $item;
-        }
-
-        foreach ($menu_items as $item) {
-            $formatted_item = [
-                'id'               => $item->ID,
-                'title'            => $item->title,
-                'url'              => $item->url,
-                'children'         => [  ],
              ];
-
-            if ($item->menu_item_parent > 0 && isset($menu_items_by_id[ $item->menu_item_parent ])) {
-                continue;
-            }
-
-            $formatted[  ] = $formatted_item;
         }
 
-        foreach ($formatted as &$parent_item) {
-            $parent_item[ 'children' ] = $this->get_menu_children($menu_items, $parent_item[ 'id' ]);
-        }
+        return $list;
 
-        return $formatted;
-    }
-
-    public function get_menu_children($menu_items, $parent_id)
-    {
-        $children = [  ];
-
-        foreach ($menu_items as $item) {
-            if ($item->menu_item_parent == $parent_id) {
-                $child_item = [
-                    'id'               => $item->ID,
-                    'title'            => $item->title,
-                    'url'              => $item->url,
-                    'children'         => $this->get_menu_children($menu_items, $item->ID),
-                 ];
-
-                $children[  ] = $child_item;
-            }
-        }
-
-        return $children;
     }
 
 }

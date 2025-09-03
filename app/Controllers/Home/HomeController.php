@@ -24,17 +24,15 @@ class HomeController extends Controller
 
         try {
 
-            $this->success([
-                'result' => $this->homeService->index(),
+            wp_send_json_success([
+                'partners' => $this->homeService->partners(),
              ]);
-
-            // $this->homeService->get_menu_by_location();
 
         } catch (Exception $e) {
 
-            return $this->error([
+            wp_send_json_error([
                 'massage' => $e->getMessage(),
-             ]);
+             ], 400);
 
         }
 
