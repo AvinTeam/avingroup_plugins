@@ -88,7 +88,7 @@ class PartnersSingleService extends Service
              ] :
             null;
 
-            $project_list[  ] = [
+            $projectList[  ] = [
                 'id'       => $project->ID,
                 'title'    => $project->post_title,
                 'image'    => post_image_url($project->ID),
@@ -111,7 +111,7 @@ class PartnersSingleService extends Service
 
             if ($client_id) {
 
-                $client_list[  ] = [
+                $clientList[  ] = [
                     'id'    => $client_id,
                     'title' => get_the_title($client_id),
                     'image' => post_image_url(intval($client_id)),
@@ -121,22 +121,24 @@ class PartnersSingleService extends Service
             }
         }
 
+
         return [
-            'id'             => $partners->ID,
-            'title'          => $partners->post_title,
-            'contact'        => $partners->post_content,
-            'image'          => post_image_url($partners->ID),
-            'slug'           => get_the_slug(intval($partners->ID)),
-            'colorPrimary'   => get_post_meta($partners->ID, '_colorPrimary', true),
-            'colorSecondary' => get_post_meta($partners->ID, '_colorSecondary', true),
-            'slogan'         => get_post_meta($partners->ID, '_slogan', true),
-            'site'           => get_post_meta($partners->ID, '_site', true),
-            'phone'          => get_post_meta($partners->ID, '_phone', true),
-            'email'          => get_post_meta($partners->ID, '_email', true),
-            'poster'         => $poster_id ? wp_get_attachment_image_url($poster_id, 'medium') : '',
-            'services'       => $services ?? [  ],
-            'project_list'   => $project_list ?? [  ],
-            'client_list'    => array_unique($client_list) ?? [  ],
+            'id'                 => $partners->ID,
+            'title'              => $partners->post_title,
+            'contact'            => $partners->post_content,
+            'image'              => post_image_url($partners->ID),
+            'slug'               => get_the_slug(intval($partners->ID)),
+            'colorPrimary'       => get_post_meta($partners->ID, '_colorPrimary', true),
+            'colorSecondary'     => get_post_meta($partners->ID, '_colorSecondary', true),
+            'slogan'             => get_post_meta($partners->ID, '_slogan', true),
+            'site'               => get_post_meta($partners->ID, '_site', true),
+            'phone'              => get_post_meta($partners->ID, '_phone', true),
+            'email'              => get_post_meta($partners->ID, '_email', true),
+            'serviceDescription' => get_post_meta($partners->ID, '_serviceDescription', true),
+            'poster'             => $poster_id ? wp_get_attachment_image_url($poster_id, 'medium') : '',
+            'services'           => $services ?? [  ],
+            'project_list'       => $projectList ?? [  ],
+            'clientList'         => $clientList ?? [  ],
          ];
 
     }

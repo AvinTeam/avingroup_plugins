@@ -38,21 +38,23 @@ class PartnersMetaBoxes extends MetaBoxes
 
     public function partners_info($post)
     {
-        $colorPrimary   = get_post_meta(get_the_ID(), '_colorPrimary', true);
-        $colorSecondary = get_post_meta(get_the_ID(), '_colorSecondary', true);
-        $slogan         = get_post_meta(get_the_ID(), '_slogan', true);
-        $site           = get_post_meta(get_the_ID(), '_site', true);
-        $phone          = get_post_meta(get_the_ID(), '_phone', true);
-        $email          = get_post_meta(get_the_ID(), '_email', true);
+        $colorPrimary       = get_post_meta(get_the_ID(), '_colorPrimary', true);
+        $colorSecondary     = get_post_meta(get_the_ID(), '_colorSecondary', true);
+        $slogan             = get_post_meta(get_the_ID(), '_slogan', true);
+        $site               = get_post_meta(get_the_ID(), '_site', true);
+        $phone              = get_post_meta(get_the_ID(), '_phone', true);
+        $email              = get_post_meta(get_the_ID(), '_email', true);
+        $serviceDescription = get_post_meta(get_the_ID(), '_serviceDescription', true);
 
         view('metaBoxes/partners/info',
             [
-                'colorPrimary'   => $colorPrimary,
-                'colorSecondary' => $colorSecondary,
-                'slogan'         => $slogan,
-                'site'           => esc_url($site),
-                'phone'          => $phone,
-                'email'          => $email,
+                'colorPrimary'       => $colorPrimary,
+                'colorSecondary'     => $colorSecondary,
+                'slogan'             => $slogan,
+                'site'               => esc_url($site),
+                'phone'              => $phone,
+                'email'              => $email,
+                'serviceDescription' => $serviceDescription,
              ]);
 
     }

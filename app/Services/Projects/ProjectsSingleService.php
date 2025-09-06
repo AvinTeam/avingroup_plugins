@@ -73,7 +73,6 @@ class ProjectsSingleService extends Service
             $gallery[  ] = wp_get_attachment_image_url($image_id, 'thumbnail');
         }
 
-        $project_list = [  ];
 
         $args = [
             'post_type'      => 'projects',
@@ -127,7 +126,7 @@ class ProjectsSingleService extends Service
              ] :
             null;
 
-            $project_list[  ] = [
+            $projectList[  ] = [
                 'id'       => $project->ID,
                 'title'    => $project->post_title,
                 'image'    => post_image_url($project->ID),
@@ -153,7 +152,7 @@ class ProjectsSingleService extends Service
             'links'              => $links,
             'galleryDescription' => get_post_meta($project->ID, '_galleryDescription', true),
             'gallery'            => $gallery,
-            'project_list'       => $project_list,
+            'projectList'        => $projectList ?? [  ],
          ];
 
     }

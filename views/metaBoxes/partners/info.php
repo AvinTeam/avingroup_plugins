@@ -2,8 +2,15 @@
     <tbody>
         <tr>
             <th scope="row"><label for="slogan">شعار</label></th>
-            <td><input name="partners[slogan]" type="text" id="slogan" value="<?php echo $slogan ?>"
-                    class="d-ltr regular-text">
+            <td> <textarea rows="3" name="partners[slogan]" id="slogan"
+                    class="regular-text"><?php echo $slogan ?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="serviceDescription">توضیحات خدمات</label></th>
+            <td>
+                <textarea rows="5" name="partners[serviceDescription]" id="serviceDescription"
+                    class="regular-text"><?php echo $serviceDescription ?></textarea>
             </td>
         </tr>
         <tr>

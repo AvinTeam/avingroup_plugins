@@ -23,8 +23,6 @@ class ClientsSingleService extends Service
             throw new Exception("چیزی برای نمایش وجود ندارد");
         }
 
-        $client_list = [  ];
-
         $clients_args = [
             'post_type'      => 'clients',
             'posts_per_page' => 12,
@@ -38,7 +36,7 @@ class ClientsSingleService extends Service
 
         foreach ($clients_post as $client) {
 
-            $client_list[  ] = [
+            $clientList[  ] = [
                 'id'    => $client->ID,
                 'title' => $client->post_title,
                 'image' => post_image_url($client->ID),
@@ -48,8 +46,6 @@ class ClientsSingleService extends Service
         }
 
         $partners_id = [  ];
-
-        $project_list = [  ];
 
         $args = [
             'post_type'      => 'projects',
@@ -79,7 +75,7 @@ class ClientsSingleService extends Service
 
             if (is_string($links)) {$links = [  ];}
 
-            $project_list[  ] = [
+            $projectList[  ] = [
                 'id'      => $project->ID,
                 'title'   => $project->post_title,
                 'contact' => $project->post_content,
@@ -105,15 +101,15 @@ class ClientsSingleService extends Service
         }
 
         $clients = [
-            'id'          => $client->ID,
-            'title'       => $client->post_title,
-            'contact'     => $client->post_content,
-            'image'       => post_image_url($client->ID),
-            'slug'        => get_the_slug(intval($client->ID)),
-            'type'        => 'clients',
-            'partners'    => $partners,
-            'projects'    => $project_list,
-            'client_list' => $client_list,
+            'id'         => $client->ID,
+            'title'      => $client->post_title,
+            'contact'    => $client->post_content,
+            'image'      => post_image_url($client->ID),
+            'slug'       => get_the_slug(intval($client->ID)),
+            'type'       => 'clients',
+            'partners'   => $partners,
+            'projects'   => $projectList ?? [  ],
+            'clientList' => $clientList ?? [  ],
          ];
 
         return $clients;
