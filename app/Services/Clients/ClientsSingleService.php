@@ -57,6 +57,14 @@ class ClientsSingleService extends Service
             'orderby'        => 'title',
             'order'          => 'ASC',
             'post_status'    => 'publish',
+            'meta_query'     => [
+                [
+                    'key'     => '_client',
+                    'value'   => $client->ID,
+                    'compare' => '=',
+                 ],
+             ],
+
          ];
 
         $projects = get_posts($args);
@@ -86,10 +94,13 @@ class ClientsSingleService extends Service
         $partners = [  ];
         foreach (array_unique($partners_id) as $id) {
             $partners[  ] = [
-                'id'    => intval($id),
-                'image' => post_image_url(intval($id)),
-                'slug'  => get_the_slug(intval($id)),
-                'type'  => 'partners',
+                'id'             => intval($id),
+                'title'          => get_the_title($id),
+                'image'          => post_image_url(intval($id)),
+                'slug'           => get_the_slug(intval($id)),
+                'type'           => 'partners',
+                'colorPrimary'   => get_post_meta(intval($id), '_colorPrimary', true),
+                'colorSecondary' => get_post_meta(intval($id), '_colorSecondary', true),
              ];
         }
 
