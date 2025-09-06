@@ -25,6 +25,15 @@ class PartnersMetaBoxes extends MetaBoxes
             'high'
         );
 
+        add_meta_box(
+            'partners_poster_meta',
+            'پوستر همکار',
+            [ $this, 'render_partners_poster_meta_box' ],
+            'partners',
+            'side',
+            'low'
+        );
+
     }
 
     public function partners_info($post)
@@ -44,6 +53,20 @@ class PartnersMetaBoxes extends MetaBoxes
                 'site'           => esc_url($site),
                 'phone'          => $phone,
                 'email'          => $email,
+             ]);
+
+    }
+
+// نمایش فیلد در ادیتور پست
+    public function render_partners_poster_meta_box($post)
+    {
+        $poster_id = get_post_meta($post->ID, '_poster', true);
+
+        view('metaBoxes/partners/poster',
+            [
+                'poster_id'    => $poster_id,
+                'poster_image' => $poster_id ? wp_get_attachment_image($poster_id, 'medium') : '',
+
              ]);
 
     }

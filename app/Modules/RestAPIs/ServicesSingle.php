@@ -25,7 +25,7 @@ class ServicesSingle extends RestAPIs
             'permission_callback' => '__return_true',
             'args'                => [
                 'slug' => [
-                    'description'       => 'client slug',
+                    'description'       => 'service slug',
                     'required'          => false,
                     'type'              => 'string',
                     'sanitize_callback' => 'sanitize_text_field',

@@ -293,5 +293,62 @@ jQuery(document).ready(function ($) {
         },
     });
 
+
+
+
+
+
+
+
+
+
+
+    $('#partners_poster_upload_btn').click(function (e) {
+        e.preventDefault();
+
+        var frame = wp.media({
+            title: 'انتخاب پوستر',
+            multiple: false,
+            library: {
+                type: 'image'
+            },
+            button: {
+                text: 'استفاده از این تصویر'
+            }
+        });
+
+        frame.on('select', function () {
+            var attachment = frame.state().get('selection').first().toJSON();
+            $('#partners_poster_id').val(attachment.id);
+            $('#partners_poster_preview').html('<img src="' + attachment.url + '" alt="" style="max-width:100%;" />');
+            $('#partners_poster_remove_btn').show();
+        });
+
+        frame.open();
+    });
+
+    // هنگامی که دکمه حذف کلیک شد
+    $('#partners_poster_remove_btn').click(function (e) {
+        e.preventDefault();
+
+        $('#partners_poster_id').val('');
+        $('#partners_poster_preview').html('');
+        $(this).hide();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 })
 

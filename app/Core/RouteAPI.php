@@ -5,6 +5,7 @@ use AvinGroup\App\Modules\RestAPIs\Clients;
 use AvinGroup\App\Modules\RestAPIs\ClientsSingle;
 use AvinGroup\App\Modules\RestAPIs\Home;
 use AvinGroup\App\Modules\RestAPIs\Options;
+use AvinGroup\App\Modules\RestAPIs\PartnersSingle;
 use AvinGroup\App\Modules\RestAPIs\ProjectsSingle;
 use AvinGroup\App\Modules\RestAPIs\ServicesSingle;
 
@@ -21,6 +22,7 @@ class RouteAPI
         new ClientsSingle;
         new ProjectsSingle;
         new ServicesSingle;
+        new PartnersSingle;
 
     }
 
