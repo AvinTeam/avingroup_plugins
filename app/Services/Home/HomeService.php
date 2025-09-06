@@ -41,6 +41,7 @@ class HomeService extends Service
                     'title' => $term->name,
                     'image' => ($icon_id) ? wp_get_attachment_image_url($icon_id, 'full') : '',
                     'slug'  => $term->slug,
+                    'type'  => 'partners',
                  ];
 
             }
@@ -76,6 +77,7 @@ class HomeService extends Service
             'orderby'        => 'title',
             'order'          => 'ASC',
             'post_status'    => 'publish',
+
          ];
 
         $clients = get_posts($args);
@@ -87,6 +89,7 @@ class HomeService extends Service
                 'title' => $client->post_title,
                 'image' => post_image_url($client->ID),
                 'slug'  => $client->post_name,
+                'type'  => 'clients',
 
              ];
         }
@@ -118,6 +121,7 @@ class HomeService extends Service
                     'id'    => intval($item),
                     'image' => post_image_url(intval($item)),
                     'slug'  => get_the_slug(intval($item)),
+                    'type'  => 'partners',
                  ];
             }
 
@@ -130,6 +134,7 @@ class HomeService extends Service
                     'id'   => intval($term->term_id),
                     'name' => $term->name,
                     'slug' => $term->slug,
+                    'type' => 'service',
                  ];
             }
 
@@ -138,6 +143,7 @@ class HomeService extends Service
                 'title'    => $project->post_title,
                 'image'    => post_image_url($project->ID),
                 'slug'     => $project->post_name,
+                'type'     => 'projects',
                 'partners' => $partners,
                 'client'   => [
                     'title' => get_the_title($client_id),

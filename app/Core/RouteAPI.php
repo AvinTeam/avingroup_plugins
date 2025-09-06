@@ -2,6 +2,7 @@
 namespace AvinGroup\App\Core;
 
 use AvinGroup\App\Modules\RestAPIs\Clients;
+use AvinGroup\App\Modules\RestAPIs\ClientsSingle;
 use AvinGroup\App\Modules\RestAPIs\Home;
 use AvinGroup\App\Modules\RestAPIs\Options;
 
@@ -15,6 +16,7 @@ class RouteAPI
         new Options;
         new Home;
         new Clients;
+        new ClientsSingle;
 
     }
 

@@ -2,20 +2,20 @@
 namespace AvinGroup\App\Controllers\Clients;
 
 use AvinGroup\App\Controllers\Controller;
-use AvinGroup\App\Services\Clients\ClientsService;
+use AvinGroup\App\Services\Clients\ClientsSingleService;
 use Exception;
 
 (defined('ABSPATH')) || exit;
 
-class ClientsController extends Controller
+class ClientsSingleController extends Controller
 {
 
-    protected $clientsService;
+    protected $clientsSingleService;
 
     public function __construct()
     {
 
-        $this->clientsService = new ClientsService;
+        $this->clientsSingleService = new ClientsSingleService;
 
     }
 
@@ -24,7 +24,7 @@ class ClientsController extends Controller
 
         try {
 
-            wp_send_json_success($this->clientsService->index($request), 200);
+            wp_send_json_success($this->clientsSingleService->index($request), 200);
 
         } catch (Exception $e) {
 

@@ -10,9 +10,7 @@ class ClientsService extends Service
 
     public function index($request)
     {
-
-        $params = $request->get_params();
-
+        $params  = $request->get_params();
         $clients = [  ];
 
         $args = [
@@ -31,6 +29,8 @@ class ClientsService extends Service
                 'id'    => $post->ID,
                 'title' => $post->post_title,
                 'image' => post_image_url($post->ID),
+                'slug'  => get_the_slug(intval($post->ID)),
+                'type'  => 'clients',
              ];
         }
 
