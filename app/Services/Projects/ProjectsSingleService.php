@@ -93,7 +93,6 @@ class ProjectsSingleService extends Service
         $projects = get_posts($args);
 
         foreach ($projects as $project) {
-            $projects_partners = [  ];
 
             foreach (get_post_meta($project->ID, '_partner', true) as $id) {
 
@@ -108,14 +107,35 @@ class ProjectsSingleService extends Service
 
             }
 
+            foreach (wp_get_object_terms($project->ID, 'service') as $term) {
+
+                $services[  ] = [
+                    'id'    => intval($term->term_id),
+                    'title' => $term->name,
+                    'slug'  => $term->slug,
+                    'type'  => $term->taxonomy,
+                 ];
+            }
+
+            $client_id = intval(get_post_meta($project->ID, '_client', true));
+            $client    = $client_id ? [
+                'id'    => $client_id,
+                'title' => get_the_title($client_id),
+                'image' => post_image_url(intval($client_id)),
+                'slug'  => get_the_slug(intval($client_id)),
+                'type'  => 'client',
+             ] :
+            null;
+
             $project_list[  ] = [
                 'id'       => $project->ID,
                 'title'    => $project->post_title,
-                'contact'  => $project->post_content,
                 'image'    => post_image_url($project->ID),
                 'slug'     => $project->post_name,
                 'type'     => 'projects',
-                'partners' => $projects_partners,
+                'partners' => $projects_partners ?? [  ],
+                'client'   => $client,
+                'services' => $services ?? [  ],
 
              ];
         }

@@ -6,6 +6,7 @@ use AvinGroup\App\Modules\RestAPIs\ClientsSingle;
 use AvinGroup\App\Modules\RestAPIs\Home;
 use AvinGroup\App\Modules\RestAPIs\Options;
 use AvinGroup\App\Modules\RestAPIs\ProjectsSingle;
+use AvinGroup\App\Modules\RestAPIs\ServicesSingle;
 
 (defined('ABSPATH')) || exit;
 
@@ -19,6 +20,7 @@ class RouteAPI
         new Clients;
         new ClientsSingle;
         new ProjectsSingle;
+        new ServicesSingle;
 
     }
 
