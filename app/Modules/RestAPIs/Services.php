@@ -18,7 +18,7 @@ class Services extends RestAPIs
     public function register_routes()
     {
 
-        register_rest_route($this->namespace, '/service/?', [
+        register_rest_route($this->namespace, '/service/slug/(?P<slug>[\w-]+)/?', [
             'methods'             => 'GET',
             'callback'            => [ $this, 'callback' ],
             'permission_callback' => '__return_true',
@@ -36,7 +36,7 @@ class Services extends RestAPIs
     public function callback(WP_REST_Request $request)
     {
 
-        (new ServicesController)->single($request->get_params());
+        (new ServicesController)->single($request->get_url_params());
 
     }
 

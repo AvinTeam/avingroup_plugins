@@ -19,6 +19,23 @@ class ProjectsController extends Controller
 
     }
 
+    public function index($request)
+    {
+
+        try {
+
+            wp_send_json_success($this->service->index($request), 200);
+
+        } catch (Exception $e) {
+
+            wp_send_json_error([
+                'massage' => $e->getMessage(),
+             ], 400);
+
+        }
+
+    }
+
     public function single($request)
     {
 

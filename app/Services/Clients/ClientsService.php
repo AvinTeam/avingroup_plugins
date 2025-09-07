@@ -3,6 +3,7 @@ namespace AvinGroup\App\Services\Clients;
 
 use AvinGroup\App\Services\Service;
 use Exception;
+use WP_Query;
 
 (defined('ABSPATH')) || exit;
 
@@ -11,30 +12,45 @@ class ClientsService extends Service
 
     public function index($params)
     {
-        $clients = [  ];
+
+        $page     = $params[ 'paged' ] ?? 1;
+        $per_page = $params[ 'per_page' ] ?? 36;
 
         $args = [
             'post_type'      => 'clients',
-            'posts_per_page' => $params[ 'per_page' ] ?? 36,
-            'paged'          => $params[ 'paged' ] ?? 1,
             'post_status'    => 'publish',
-
+            'posts_per_page' => absint($per_page),
+            'paged'          => absint($page),
+            'orderby'        => 'date',
+            'order'          => 'DESC',
          ];
 
-        $posts = get_posts($args);
+        $query = new WP_Query($args);
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
 
-        foreach ($posts as $post) {
-
-            $clients[  ] = [
-                'id'    => $post->ID,
-                'title' => $post->post_title,
-                'image' => post_image_url($post->ID),
-                'slug'  => get_the_slug(intval($post->ID)),
-                'type'  => 'clients',
-             ];
+                $items[  ] = [
+                    'id'    => get_the_ID(),
+                    'title' => get_the_title(),
+                    'image' => post_image_url(get_the_ID()),
+                    'slug'  => get_the_slug(intval(get_the_ID())),
+                    'type'  => 'clients',
+                 ];
+            }
         }
 
-        return $clients;
+        return [
+            'items'      => $items ?? [  ],
+            'pagination' => [
+                'current_page' => absint($page),
+                'per_page'     => absint($per_page),
+                'total_posts'  => absint($query->found_posts),
+                'total_pages'  => absint($query->max_num_pages),
+                'has_next'     => absint($page) < absint($query->max_num_pages),
+                'has_prev'     => absint($page) > 1,
+             ],
+         ];
     }
 
     public function single($request)

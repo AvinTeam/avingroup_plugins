@@ -18,7 +18,7 @@ class Partners extends RestAPIs
     public function register_routes()
     {
 
-        register_rest_route($this->namespace, '/partners/?', [
+        register_rest_route($this->namespace, '/partners/slug/(?P<slug>[\w-]+)/?', [
             'methods'             => 'GET',
             'callback'            => [ $this, 'callback' ],
             'permission_callback' => '__return_true',
@@ -36,7 +36,7 @@ class Partners extends RestAPIs
     public function callback(WP_REST_Request $request)
     {
 
-        (new PartnersController)->single($request->get_params());
+        (new PartnersController)->single($request->get_url_params());
 
     }
 

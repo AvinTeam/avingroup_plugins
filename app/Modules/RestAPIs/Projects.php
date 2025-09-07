@@ -12,14 +12,13 @@ class Projects extends RestAPIs
 
     public function __construct()
     {
-
         add_action('rest_api_init', [ $this, 'register_routes' ]);
     }
 
     public function register_routes()
     {
 
-        register_rest_route($this->namespace, '/projects/?', [
+        register_rest_route($this->namespace, '/projects/slug/(?P<slug>[\w-]+)/?', [
             'methods'             => 'GET',
             'callback'            => [ $this, 'single' ],
             'permission_callback' => '__return_true',
@@ -33,6 +32,28 @@ class Projects extends RestAPIs
              ],
          ]
         );
+
+        register_rest_route($this->namespace, '/projects/?', [
+            'methods'             => 'GET',
+            'callback'            => [ $this, 'index' ],
+            'permission_callback' => '__return_true',
+            'args'                => [
+                'per_page' => [
+                    'description'       => 'per page',
+                    'required'          => false,
+                    'type'              => 'integer',
+                    'sanitize_callback' => 'absint',
+                 ],
+                'paged'    => [
+                    'description'       => 'paged',
+                    'required'          => false,
+                    'type'              => 'integer',
+                    'sanitize_callback' => 'absint',
+                 ],
+             ],
+         ]
+        );
+
         register_rest_route($this->namespace, '/projects/filters/?', [
             'methods'             => 'GET',
             'callback'            => [ $this, 'filters' ],
@@ -40,14 +61,23 @@ class Projects extends RestAPIs
          ]
         );
     }
+
+    public function index(WP_REST_Request $request)
+    {
+
+        (new ProjectsController)->index($request->get_body_params());
+
+    }
+
     public function single(WP_REST_Request $request)
     {
-        (new ProjectsController)->single($request->get_params());
+        (new ProjectsController)->single($request->get_url_params());
 
     }
 
     public function filters()
     {
-        (new ProjectsController)->filters();}
+        (new ProjectsController)->filters();
+    }
 
 }
