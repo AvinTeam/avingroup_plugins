@@ -21,7 +21,7 @@ class Clients extends RestAPIs
 
         register_rest_route($this->namespace, '/clients/?', [
             'methods'             => 'GET',
-            'callback'            => [ $this, 'callback' ],
+            'callback'            => [ $this, 'index' ],
             'permission_callback' => '__return_true',
             'args'                => [
                 'per_page' => [
@@ -42,7 +42,7 @@ class Clients extends RestAPIs
 
         register_rest_route($this->namespace, '/clients/(?P<slug>[\w-]+)/?', [
             'methods'             => 'GET',
-            'callback'            => [ $this, 'callback' ],
+            'callback'            => [ $this, 'single' ],
             'permission_callback' => '__return_true',
             'args'                => [
                 'slug' => [
@@ -56,10 +56,15 @@ class Clients extends RestAPIs
         );
     }
 
-    public function callback(WP_REST_Request $request)
+    public function index(WP_REST_Request $request)
     {
 
-        (new ClientsController)->index($request);
+        (new ClientsController)->index($request->get_params());
+
+    }
+    public function single(WP_REST_Request $request)
+    {
+
         (new ClientsController)->single($request->get_params());
 
     }

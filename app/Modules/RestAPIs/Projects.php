@@ -7,7 +7,7 @@ use WP_REST_Request;
 
 (defined('ABSPATH')) || exit;
 
-class ProjectsSingle extends RestAPIs
+class Projects extends RestAPIs
 {
 
     public function __construct()
@@ -19,25 +19,35 @@ class ProjectsSingle extends RestAPIs
     public function register_routes()
     {
 
-        register_rest_route($this->namespace, '/projects/(?P<slug>[\w-]+)/?', [
+        register_rest_route($this->namespace, '/projects/?', [
             'methods'             => 'GET',
-            'callback'            => [ $this, 'callback' ],
+            'callback'            => [ $this, 'single' ],
             'permission_callback' => '__return_true',
             'args'                => [
                 'slug' => [
                     'description'       => 'projects slug',
-                    'required'          => false,
+                    'required'          => true,
                     'type'              => 'string',
                     'sanitize_callback' => 'sanitize_text_field',
                  ],
              ],
          ]
         );
+        register_rest_route($this->namespace, '/projects/filters/?', [
+            'methods'             => 'GET',
+            'callback'            => [ $this, 'filters' ],
+            'permission_callback' => '__return_true',
+         ]
+        );
     }
-    public function callback(WP_REST_Request $request)
+    public function single(WP_REST_Request $request)
     {
         (new ProjectsController)->single($request->get_params());
 
     }
+
+    public function filters()
+    {
+        (new ProjectsController)->filters();}
 
 }

@@ -4,9 +4,9 @@ namespace AvinGroup\App\Core;
 use AvinGroup\App\Modules\RestAPIs\Clients;
 use AvinGroup\App\Modules\RestAPIs\Home;
 use AvinGroup\App\Modules\RestAPIs\Options;
-use AvinGroup\App\Modules\RestAPIs\PartnersSingle;
-use AvinGroup\App\Modules\RestAPIs\ProjectsSingle;
-use AvinGroup\App\Modules\RestAPIs\ServicesSingle;
+use AvinGroup\App\Modules\RestAPIs\Partners;
+use AvinGroup\App\Modules\RestAPIs\Projects;
+use AvinGroup\App\Modules\RestAPIs\Services;
 
 (defined('ABSPATH')) || exit;
 
@@ -18,9 +18,9 @@ class RouteAPI
         new Options;
         new Home;
         new Clients;
-        new ProjectsSingle;
-        new ServicesSingle;
-        new PartnersSingle;
+        new Projects;
+        new Services;
+        new Partners;
 
     }
 

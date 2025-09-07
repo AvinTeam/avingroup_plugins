@@ -36,4 +36,21 @@ class ProjectsController extends Controller
 
     }
 
+    public function filters()
+    {
+
+        try {
+
+            wp_send_json_success($this->service->filters(), 200);
+
+        } catch (Exception $e) {
+
+            wp_send_json_error([
+                'massage' => $e->getMessage(),
+             ], 400);
+
+        }
+
+    }
+
 }

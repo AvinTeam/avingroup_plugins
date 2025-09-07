@@ -156,4 +156,62 @@ class ProjectsService extends Service
 
     }
 
+    public function filters()
+    {
+
+        $args = [
+            'post_type'      => 'partners',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'post_status'    => 'publish',
+            'fields'         => 'ids',
+         ];
+
+        $partner_list = get_posts($args);
+
+        foreach ($partner_list as $id) {
+
+            $partners[  ] = [
+                'id'    => intval($id),
+                'title' => get_the_title($id),
+             ];
+
+            foreach (wp_get_object_terms($id, 'service') as $term) {
+
+                $services[ 'partner' . $id ][  ] = [
+                    'id'    => intval($term->term_id),
+                    'title' => $term->name,
+                 ];
+            }
+
+        }
+
+        $args = [
+            'post_type'      => 'clients',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'post_status'    => 'publish',
+            'fields'         => 'ids',
+         ];
+
+        $client_list = get_posts($args);
+
+        foreach ($client_list as $id) {
+
+            $clients[  ] = [
+                'id'    => intval($id),
+                'title' => get_the_title($id),
+             ];
+        }
+
+        return [
+            'partners' => $partners ?? [  ],
+            'services' => $services ?? [  ],
+            'clients'  => $clients ?? [  ],
+         ];
+
+    }
+
 }

@@ -9,9 +9,8 @@ use Exception;
 class ClientsService extends Service
 {
 
-    public function index($request)
+    public function index($params)
     {
-        $params  = $request->get_params();
         $clients = [  ];
 
         $args = [
