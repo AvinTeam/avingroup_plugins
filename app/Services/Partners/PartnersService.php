@@ -6,10 +6,10 @@ use Exception;
 
 (defined('ABSPATH')) || exit;
 
-class PartnersSingleService extends Service
+class PartnersService extends Service
 {
 
-    public function index($request)
+    public function single($request)
     {
 
         $partners = get_page_by_path(sanitize_text_field($request[ 'slug' ]), OBJECT, 'partners');
@@ -120,7 +120,6 @@ class PartnersSingleService extends Service
                  ];
             }
         }
-
 
         return [
             'id'                 => $partners->ID,

@@ -6,10 +6,10 @@ use Exception;
 
 (defined('ABSPATH')) || exit;
 
-class ServicesSingleService extends Service
+class ServicesService extends Service
 {
 
-    public function index($request)
+    public function single($request)
     {
 
         $term = get_term_by('slug', sanitize_text_field($request[ 'slug' ]), 'service');

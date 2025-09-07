@@ -1,7 +1,7 @@
 <?php
 namespace AvinGroup\App\Modules\RestAPIs;
 
-use AvinGroup\App\Controllers\Projects\ProjectsSingleController;
+use AvinGroup\App\Controllers\Projects\ProjectsController;
 use AvinGroup\App\Core\RestAPIs;
 use WP_REST_Request;
 
@@ -36,7 +36,7 @@ class ProjectsSingle extends RestAPIs
     }
     public function callback(WP_REST_Request $request)
     {
-        (new ProjectsSingleController)->index($request->get_params());
+        (new ProjectsController)->single($request->get_params());
 
     }
 

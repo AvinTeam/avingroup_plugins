@@ -6,10 +6,10 @@ use Exception;
 
 (defined('ABSPATH')) || exit;
 
-class ProjectsSingleService extends Service
+class ProjectsService extends Service
 {
 
-    public function index($request)
+    public function single($request)
     {
 
         $project = get_page_by_path(sanitize_text_field($request[ 'slug' ]), OBJECT, 'projects');
@@ -72,7 +72,6 @@ class ProjectsSingleService extends Service
         foreach ($image_ids as $image_id) {
             $gallery[  ] = wp_get_attachment_image_url($image_id, 'thumbnail');
         }
-
 
         $args = [
             'post_type'      => 'projects',

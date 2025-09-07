@@ -10,12 +10,12 @@ use Exception;
 class ClientsController extends Controller
 {
 
-    protected $clientsService;
+    protected $service;
 
     public function __construct()
     {
 
-        $this->clientsService = new ClientsService;
+        $this->service = new ClientsService;
 
     }
 
@@ -24,7 +24,24 @@ class ClientsController extends Controller
 
         try {
 
-            wp_send_json_success($this->clientsService->index($request), 200);
+            wp_send_json_success($this->service->index($request), 200);
+
+        } catch (Exception $e) {
+
+            wp_send_json_error([
+                'massage' => $e->getMessage(),
+             ], 400);
+
+        }
+
+    }
+
+    public function single($request)
+    {
+
+        try {
+
+            wp_send_json_success($this->service->single($request), 200);
 
         } catch (Exception $e) {
 

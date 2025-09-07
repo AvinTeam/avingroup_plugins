@@ -39,12 +39,28 @@ class Clients extends RestAPIs
              ],
          ]
         );
+
+        register_rest_route($this->namespace, '/clients/(?P<slug>[\w-]+)/?', [
+            'methods'             => 'GET',
+            'callback'            => [ $this, 'callback' ],
+            'permission_callback' => '__return_true',
+            'args'                => [
+                'slug' => [
+                    'description'       => 'client slug',
+                    'required'          => false,
+                    'type'              => 'string',
+                    'sanitize_callback' => 'sanitize_text_field',
+                 ],
+             ],
+         ]
+        );
     }
 
     public function callback(WP_REST_Request $request)
     {
 
         (new ClientsController)->index($request);
+        (new ClientsController)->single($request->get_params());
 
     }
 

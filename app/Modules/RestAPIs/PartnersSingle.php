@@ -1,7 +1,7 @@
 <?php
 namespace AvinGroup\App\Modules\RestAPIs;
 
-use AvinGroup\App\Controllers\Partners\PartnersSingleController;
+use AvinGroup\App\Controllers\Partners\PartnersController;
 use AvinGroup\App\Core\RestAPIs;
 use WP_REST_Request;
 
@@ -37,7 +37,7 @@ class PartnersSingle extends RestAPIs
     public function callback(WP_REST_Request $request)
     {
 
-        (new PartnersSingleController)->index($request->get_params());
+        (new PartnersController)->single($request->get_params());
 
     }
 

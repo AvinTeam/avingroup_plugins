@@ -2,29 +2,29 @@
 namespace AvinGroup\App\Controllers\Projects;
 
 use AvinGroup\App\Controllers\Controller;
-use AvinGroup\App\Services\Projects\ProjectsSingleService;
+use AvinGroup\App\Services\Projects\ProjectsService;
 use Exception;
 
 (defined('ABSPATH')) || exit;
 
-class ProjectsSingleController extends Controller
+class ProjectsController extends Controller
 {
 
-    protected $projectsSingleService;
+    protected $service;
 
     public function __construct()
     {
 
-        $this->projectsSingleService = new ProjectsSingleService;
+        $this->service = new ProjectsService;
 
     }
 
-    public function index($request)
+    public function single($request)
     {
 
         try {
 
-            wp_send_json_success($this->projectsSingleService->index($request), 200);
+            wp_send_json_success($this->service->single($request), 200);
 
         } catch (Exception $e) {
 

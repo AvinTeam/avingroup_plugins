@@ -1,7 +1,7 @@
 <?php
 namespace AvinGroup\App\Modules\RestAPIs;
 
-use AvinGroup\App\Controllers\Services\ServicesSingleController;
+use AvinGroup\App\Controllers\Services\ServicesController;
 use AvinGroup\App\Core\RestAPIs;
 use WP_REST_Request;
 
@@ -37,7 +37,7 @@ class ServicesSingle extends RestAPIs
     public function callback(WP_REST_Request $request)
     {
 
-        (new ServicesSingleController)->index($request->get_params());
+        (new ServicesController)->single($request->get_params());
 
     }
 
